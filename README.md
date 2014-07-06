@@ -1,6 +1,5 @@
 # Hash Field
- 
-## Purpose
+
 Enables you to add a unique and read-only hash to an entry, generated using the entry ID. Ideal for using as an obfuscated URL slug or non-sequential ID. This extension uses the Hashids PHP library: http://www.hashids.org/php/.
 
 The minimum hash length and the salt can be set in your Symphony preferences. Hashes are re-genereated when a pre-existing entry is saved, so if you change the salt or hash length and update an entry, its hash will change. So it's generally advised to set these when first installing the extension and avoid changing them unless that's your intention. This is especially important if you plan on using the hashes for URL slugs.
