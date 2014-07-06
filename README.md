@@ -1,4 +1,4 @@
-# Hashid
+# Hash Field
  
 ## Purpose
 Enables you to add a unique and read-only hash to an entry, generated using the entry ID. Ideal for using as an obfuscated URL slug or non-sequential ID. This extension uses the Hashids PHP library: http://www.hashids.org/php/.
@@ -9,6 +9,6 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Installation and usage
  
-1. Upload the `/hashids` folder to your Symphony `/extensions` folder
-2. Enable it by selecting "Hashids" in the list, choose Enable from the with-selected menu, then click Apply
+1. Upload the `/hash_field` folder to your Symphony `/extensions` folder
+2. Enable it by selecting "Hash Field" in the list, choose Enable from the with-selected menu, then click Apply
 3. Add to any section where you need a hash!
