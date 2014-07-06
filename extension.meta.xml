@@ -12,6 +12,6 @@
 		</author>
 	</authors>
 	<releases>
-		<release version="1.0" date="2014-07-03" min="2.4" />
+		<release version="1.0" date="2014-07-03" min="2.4" max="2.4" />
 	</releases>
 </extension>
