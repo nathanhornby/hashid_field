@@ -36,7 +36,7 @@ class extension_Hash_field extends Extension
     public function install()
     {
         Symphony::Database()->query(
-            "CREATE TABLE IF NOT EXISTS `tbl_fields_hash` (
+            "CREATE TABLE IF NOT EXISTS `tbl_fields_hash_field` (
                 `id` int(11) unsigned NOT NULL auto_increment,
                 `field_id` int(11) unsigned NOT NULL,
                 `size` int(3) unsigned NOT NULL,
