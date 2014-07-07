@@ -75,7 +75,6 @@ class extension_Hashid_field extends Extension
 
         $sitename = Symphony::Configuration()->get('sitename', 'general');
 
-        // Add fieldset
         $group = new XMLElement('fieldset', '<legend>' . __('Hashid Field') . '</legend>', array('class' => 'settings'));
 
         $select = Widget::Input('settings[hashid_field][hash_salt]', $settings['hash_salt']);

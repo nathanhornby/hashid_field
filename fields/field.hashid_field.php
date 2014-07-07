@@ -162,9 +162,7 @@
 
 			if (strlen(trim($data)) == 0) return array();
 
-			$result = array(
-				'value' => $data
-			);
+			$result = array( 'value' => $data );
 
 			$result['handle'] = Lang::createHandle($result['value']);
 
@@ -349,34 +347,6 @@
 					$order
 				);
 			}
-		}
-
-
-	/*-------------------------------------------------------------------------
-		Grouping:
-	-------------------------------------------------------------------------*/
-
-		public function groupRecords($records){
-			if(!is_array($records) || empty($records)) return;
-
-			$groups = array($this->get('element_name') => array());
-
-			foreach($records as $r){
-				$data = $r->getData($this->get('id'));
-				$value = General::sanitize($data['value']);
-
-				if(!isset($groups[$this->get('element_name')][$data['handle']])){
-					$groups[$this->get('element_name')][$data['handle']] = array(
-						'attr' => array('handle' => $data['handle'], 'value' => $value),
-						'records' => array(),
-						'groups' => array()
-					);
-				}
-
-				$groups[$this->get('element_name')][$data['handle']]['records'][] = $r;
-			}
-
-			return $groups;
 		}
 
 	}
