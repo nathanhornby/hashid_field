@@ -12,10 +12,10 @@
 		</author>
 	</authors>
 	<releases>
-		<release version="1.1" date="2014-07-07" min="2.4" max="2.4">
+		<release version="0.2" date="2014-07-07" min="2.4" max="2.4">
 			- Changed extension name.
 			- Added field settings to allow for different salt's and lengths for each hashid field instance.
 		</release>
-		<release version="1.0" date="2014-07-03" min="2.4" max="2.4" />
+		<release version="0.1" date="2014-07-03" min="2.4" max="2.4" />
 	</releases>
 </extension>
