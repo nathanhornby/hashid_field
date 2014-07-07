@@ -1,9 +1,13 @@
 <?php
 
+	require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 	require_once FACE . '/interface.exportablefield.php';
 	require_once FACE . '/interface.importablefield.php';
 
 	class FieldHashid_field extends Field implements ExportableField, ImportableField {
+
+		protected static $compiling = 0;
+
 		public function __construct(){
 			parent::__construct();
 			$this->_name = __('Hashid');
@@ -111,14 +115,11 @@
 	-------------------------------------------------------------------------*/
 
 		public function displayPublishPanel(XMLElement &$wrapper, $data = null, $flagWithError = null, $fieldnamePrefix = null, $fieldnamePostfix = null, $entry_id = null){
-
-			require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 			
 			$hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
 			$hash = $hash->encrypt($entry_id);
 
-			// $value = General::sanitize(isset($data['value']) ? $data['value'] : $hash); // Fixed hash
-			$value = $hash; // Dynamic hash
+			$value = $hash;
 
 			$label = Widget::Label($this->get('label'));
 			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', __('Optional')));
@@ -139,17 +140,13 @@
 			
 		}
 
+	/*-------------------------------------------------------------------------
+		Input:
+	-------------------------------------------------------------------------*/
+
 		public function checkPostFieldData($data, &$message, $entry_id=NULL){
-			$message = NULL;
-
-			if(is_array($data) && isset($data['value'])) {
-				$data = $data['value'];
-			}
-
-			if($this->get('required') == 'yes' && strlen(trim($data)) == 0){
-				$message = __('‘%s’ is a required field.', array($this->get('label')));
-				return self::__MISSING_FIELDS__;
-			}
+			$driver = Symphony::ExtensionManager()->create('hashid_field');
+			$driver->registerField($this);
 
 			return self::__OK__;
 		}
@@ -169,12 +166,9 @@
 	-------------------------------------------------------------------------*/
 
 		public function appendFormattedElement(XMLElement &$wrapper, $data, $encode = false, $mode = null, $entry_id = null){
-			
 			if (self::$compiling == $this->get('id')) return;
 
-			$value = $data['value'];
-
-			$wrapper->appendChild(new XMLElement($this->get('element_name'), $value));
+			$wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value']));
 		}
 
 	/*-------------------------------------------------------------------------
@@ -185,57 +179,19 @@
 			self::$compiling = $this->get('id');
 
 			$driver = Symphony::ExtensionManager()->create('hashid_field');
-			$xpath = $driver->getXPath($entry, $this->get('xsltfile'), $this->get('fetch_associated_counts'));
 
 			self::$compiling = 0;
 
 			$entry_id = $entry->get('id');
 			$field_id = $this->get('id');
-			$expression = $this->get('expression');
-			$replacements = array();
+			$data = $entry->getData($field_id);
 
-			// Find queries:
-			preg_match_all('/\{[^\}]+\}/', $expression, $matches);
-
-			// Find replacements:
-			foreach ($matches[0] as $match) {
-				$result = @$xpath->evaluate('string(' . trim($match, '{}') . ')');
-
-				if (!is_null($result)) {
-					$replacements[$match] = trim($result);
-				}
-
-				else {
-					$replacements[$match] = '';
-				}
+			if($data == null){
+				$hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+				$hash = $hash->encrypt($entry_id);
+				$result = Symphony::Database()->insert(array('value' => $hash, 'entry_id' => $entry_id), "tbl_entries_data_".$field_id );
 			}
 
-			// Apply replacements:
-			$value = str_replace(
-				array_keys($replacements),
-				array_values($replacements),
-				$expression
-			);
-
-			// Apply formatting:
-			if (!$value_formatted = $this->applyFormatting($value)) {
-				$value_formatted = General::sanitize($value);
-			}
-
-			$data = array(
-				'handle'			=> Lang::createHandle($value),
-				'value'				=> $value,
-				'value_formatted'	=> $value_formatted
-			);
-
-			// Save:
-			$result = Symphony::Database()->update(
-				$data,
-				"tbl_entries_data_{$field_id}",
-				"`entry_id` = '{$entry_id}'"
-			);
-
-			$entry->setData($field_id, $data);
 		}
 
 	/*-------------------------------------------------------------------------

@@ -3,23 +3,30 @@
 class extension_Hashid_field extends Extension
 {
 
+    protected static $fields = array();
+
     public function getSubscribedDelegates()
     {
         return array(
             array(
-                'page' => '/system/preferences/',
-                'delegate' => 'AddCustomPreferenceFieldsets',
-                'callback' => '__addPreferences'
+                'page'      => '/publish/edit/',
+                'delegate'  => 'EntryPostEdit',
+                'callback'  => 'compileBackendFields'
             ),
             array(
-                'page' => '/system/preferences/',
-                'delegate' => 'Save',
-                'callback' => '__savePreferences'
+                'page'      => '/publish/new/',
+                'delegate'  => 'EntryPostCreate',
+                'callback'  => 'compileBackendFields'
             ),
             array(
-                'page' => '/backend/',
-                'delegate' => 'InitaliseAdminPageHead',
-                'callback' => 'initaliseAdminPageHead'
+                'page'      => '/system/preferences/',
+                'delegate'  => 'AddCustomPreferenceFieldsets',
+                'callback'  => '__addPreferences'
+            ),
+            array(
+                'page'      => '/backend/',
+                'delegate'  => 'InitaliseAdminPageHead',
+                'callback'  => 'initaliseAdminPageHead'
             )
         );
     }
@@ -32,6 +39,10 @@ class extension_Hashid_field extends Extension
             Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/hashid_field/assets/publish.hashid_field.css');
         }
     }
+
+    /*-------------------------------------------------------------------------
+        Install/Uninstall:
+    -------------------------------------------------------------------------*/
 
     public function install()
     {
@@ -68,6 +79,29 @@ class extension_Hashid_field extends Extension
 
         return false;
     }
+
+    /*-------------------------------------------------------------------------
+        Fields:
+    -------------------------------------------------------------------------*/
+
+    public function registerField($field) {
+        self::$fields[] = $field;
+    }
+
+    public function compileBackendFields($context) {
+
+        if ( empty(self::$fields) ) {
+            self::$fields = $context['section']->fetchFields('hashid_field');
+        }
+
+        foreach (self::$fields as $field) {
+            $field->compile($context['entry']);
+        }
+    }
+
+    /*-------------------------------------------------------------------------
+        Preferences:
+    -------------------------------------------------------------------------*/
 
     public function __addPreferences($context) {
 
