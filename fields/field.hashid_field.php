@@ -4,13 +4,18 @@
 	require_once FACE . '/interface.exportablefield.php';
 	require_once FACE . '/interface.importablefield.php';
 
-	class FieldHash_field extends Field implements ExportableField, ImportableField {
+	class FieldHashid_field extends Field implements ExportableField, ImportableField {
 		public function __construct(){
 			parent::__construct();
-			$this->_name = __('Hash');
+			$this->_name = __('Hashid');
 			$this->_required = true;
 
+			$default_settings = Symphony::Configuration()->get('hashid_field');
+
+			$this->set('salt', $default_settings['hash_salt']);
+			$this->set('length', $default_settings['hash_length']);
 			$this->set('required', 'no');
+			$this->set('location', 'sidebar');
 		}
 
 	/*-------------------------------------------------------------------------
@@ -18,6 +23,10 @@
 	-------------------------------------------------------------------------*/
 
 		public function canFilter(){
+			return true;
+		}
+
+		public function canPrePopulate(){
 			return true;
 		}
 
@@ -63,6 +72,24 @@
 		public function displaySettingsPanel(XMLElement &$wrapper, $errors = null) {
 			parent::displaySettingsPanel($wrapper, $errors);
 
+			// Options
+			$div = new XMLElement('div', NULL, array('class' => 'two columns'));
+			$wrapper->appendChild($div);
+
+			// Hash salt
+			$label = Widget::Label(__('Hash salt'));
+			$input = Widget::Input('fields['.$this->get('sortorder').'][salt]', (string)$this->get('salt'));
+			$label->setAttribute('class', 'column');
+			$label->appendChild($input);
+			$div->appendChild($label);
+
+			// Hash length
+			$label = Widget::Label(__('Hash length'));
+			$input = Widget::Input('fields['.$this->get('sortorder').'][length]', (string)$this->get('length'));
+			$label->setAttribute('class', 'column');
+			$label->appendChild($input);
+			$div->appendChild($label);
+
 			// Requirements and table display
 			$this->appendStatusFooter($wrapper);
 		}
@@ -74,7 +101,12 @@
 
 			if($id === false) return false;
 
-			return FieldManager::saveSettings($id, $fields);
+			$fields = array();
+			$fields['field_id'] = $id;
+			$fields['length'] = max(1, (int)$this->get('length'));
+			$fields['salt'] = $this->get('salt');
+
+			if(!FieldManager::saveSettings($id, $fields)) return false;
 		}
 
 	/*-------------------------------------------------------------------------
@@ -83,11 +115,9 @@
 
 		public function displayPublishPanel(XMLElement &$wrapper, $data = null, $flagWithError = null, $fieldnamePrefix = null, $fieldnamePostfix = null, $entry_id = null){
 
-			require EXTENSIONS . '/hash_field/lib/Hashids.php';
-
-			$settings = Symphony::Configuration()->get('hash_field');
+			require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 			
-			$hash = new Hashids\Hashids( $settings['hash_salt'] , $settings['hash_length'] );
+			$hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
 			$hash = $hash->encrypt($entry_id);
 
 			// $value = General::sanitize(isset($data['value']) ? $data['value'] : $hash); // Fixed hash
