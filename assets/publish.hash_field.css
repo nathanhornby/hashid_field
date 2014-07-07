@@ -13,6 +13,7 @@
 	margin-top: 0.2rem;
 }
 .field-hash_field .hash{
+	cursor: text;
 	font-family: 'Courier New', 'Courier', monospace;
 	font-size: 120%;
 	background: #eee;
