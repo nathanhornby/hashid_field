@@ -1,9 +1,5 @@
 <?php
 
-	/**
-	 * @package toolkit
-	 */
-
 	require_once TOOLKIT . '/class.xsltprocess.php';
 	require_once FACE . '/interface.exportablefield.php';
 	require_once FACE . '/interface.importablefield.php';
@@ -22,10 +18,6 @@
 	-------------------------------------------------------------------------*/
 
 		public function canFilter(){
-			return true;
-		}
-
-		public function canPrePopulate(){
 			return true;
 		}
 
@@ -105,8 +97,19 @@
 			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', __('Optional')));
 			$label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($value) != 0 ? $value : NULL), 'text', array('readonly' => 'readonly') ));
 
+			// If the hash exists display it, otherwise, display a message.
+			if(strlen($value) != 0){
+				$label->appendChild('<p class="hash-field-box hash">'.$value.'</p>');
+			}else{
+				$label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is saved.</p>');
+			};
+			if($data['value'] != $hash){
+				$label->appendChild('<p class="hash-field-box hash-warning">This hash will be regenereated when the entry is saved.</p>');
+			};
+
 			if($flagWithError != NULL) $wrapper->appendChild(Widget::Error($label, $flagWithError));
 			else $wrapper->appendChild($label);
+			
 		}
 
 		public function checkPostFieldData($data, &$message, $entry_id=NULL){

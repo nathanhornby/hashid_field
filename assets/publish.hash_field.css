@@ -1,3 +1,28 @@
 .field-hash_field input[readonly="readonly"]{
+	display: none;
+}
+.field-hash_field .hash-field-box{
+	font-size: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+	height: 2.2rem;
+	padding: 0.2rem 0.3rem;
+	margin-bottom: 0.3rem;
+	margin-top: 0.2rem;
+}
+.field-hash_field .hash{
+	font-family: 'Courier New', 'Courier', monospace;
+	font-size: 120%;
 	background: #eee;
+	border: 0.1rem solid rgba(0,0,0,0.25);
+}
+.field-hash_field .hash-info{
+	background: #fff5c4;
+	border: 0.1rem solid #d4cba5;
+}
+.field-hash_field .hash-warning{
+	background: #ffcecd;
+	border: 0.1rem solid #c29d9c;
 }
