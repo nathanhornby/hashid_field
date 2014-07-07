@@ -51,11 +51,9 @@
 				CREATE TABLE IF NOT EXISTS `tbl_entries_data_" . $this->get('id') . "` (
 				  `id` int(11) unsigned NOT NULL auto_increment,
 				  `entry_id` int(11) unsigned NOT NULL,
-				  `handle` varchar(255) default NULL,
 				  `value` varchar(32) default NULL,
 				  PRIMARY KEY  (`id`),
 				  UNIQUE KEY `entry_id` (`entry_id`),
-				  KEY `handle` (`handle`),
 				  KEY `value` (`value`)
 				) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 			");
@@ -164,8 +162,6 @@
 
 			$result = array( 'value' => $data );
 
-			$result['handle'] = Lang::createHandle($result['value']);
-
 			return $result;
 		}
 
@@ -192,11 +188,7 @@
 				}
 			}
 
-			$wrapper->appendChild(
-				new XMLElement(
-					$this->get('element_name'), $value, array('handle' => $data['handle'])
-				)
-			);
+			$wrapper->appendChild(new XMLElement($this->get('element_name'), $value));
 		}
 
 	/*-------------------------------------------------------------------------
@@ -228,41 +220,15 @@
 		Export:
 	-------------------------------------------------------------------------*/
 
-		/**
-		 * Return a list of supported export modes for use with `prepareExportValue`.
-		 *
-		 * @return array
-		 */
 		public function getExportModes() {
 			return array(
-				'getHandle' =>		ExportableField::HANDLE,
 				'getUnformatted' =>	ExportableField::UNFORMATTED,
 				'getPostdata' =>	ExportableField::POSTDATA
 			);
 		}
 
-		/**
-		 * Give the field some data and ask it to return a value using one of many
-		 * possible modes.
-		 *
-		 * @param mixed $data
-		 * @param integer $mode
-		 * @param integer $entry_id
-		 * @return string|null
-		 */
 		public function prepareExportValue($data, $mode, $entry_id = null) {
 			$modes = (object)$this->getExportModes();
-
-			// Export handles:
-			if ($mode === $modes->getHandle) {
-				if (isset($data['handle'])) {
-					return $data['handle'];
-				}
-
-				else if (isset($data['value'])) {
-					return Lang::createHandle($data['value']);
-				}
-			}
 
 			// Export unformatted:
 			if ($mode === $modes->getUnformatted || $mode === $modes->getPostdata) {
@@ -282,7 +248,7 @@
 			$field_id = $this->get('id');
 
 			if (self::isFilterRegex($data[0])) {
-				$this->buildRegexSQL($data[0], array('value','handle'), $joins, $where);
+				$this->buildRegexSQL($data[0], array('value'), $joins, $where);
 			}
 			else if ($andOperation) {
 				foreach ($data as $value) {
@@ -296,7 +262,6 @@
 					$where .= "
 						AND (
 							t{$field_id}_{$this->_key}.value = '{$value}'
-							OR t{$field_id}_{$this->_key}.handle = '{$value}'
 						)
 					";
 				}
@@ -319,7 +284,6 @@
 				$where .= "
 					AND (
 						t{$field_id}_{$this->_key}.value IN ('{$data}')
-						OR t{$field_id}_{$this->_key}.handle IN ('{$data}')
 					)
 				";
 			}
