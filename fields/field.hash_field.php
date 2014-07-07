@@ -103,7 +103,7 @@
 			}else{
 				$label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is saved.</p>');
 			};
-			if($data['value'] != $hash){
+			if($data['value'] != $hash && $data['value'] != NULL){
 				$label->appendChild('<p class="hash-field-box hash-warning">This hash will be regenereated when the entry is saved.</p>');
 			};
 
@@ -319,6 +319,34 @@
 					$order
 				);
 			}
+		}
+
+
+	/*-------------------------------------------------------------------------
+		Grouping:
+	-------------------------------------------------------------------------*/
+
+		public function groupRecords($records){
+			if(!is_array($records) || empty($records)) return;
+
+			$groups = array($this->get('element_name') => array());
+
+			foreach($records as $r){
+				$data = $r->getData($this->get('id'));
+				$value = General::sanitize($data['value']);
+
+				if(!isset($groups[$this->get('element_name')][$data['handle']])){
+					$groups[$this->get('element_name')][$data['handle']] = array(
+						'attr' => array('handle' => $data['handle'], 'value' => $value),
+						'records' => array(),
+						'groups' => array()
+					);
+				}
+
+				$groups[$this->get('element_name')][$data['handle']]['records'][] = $r;
+			}
+
+			return $groups;
 		}
 
 	}
