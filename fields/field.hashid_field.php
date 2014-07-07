@@ -1,6 +1,5 @@
 <?php
 
-	require_once TOOLKIT . '/class.xsltprocess.php';
 	require_once FACE . '/interface.exportablefield.php';
 	require_once FACE . '/interface.importablefield.php';
 
@@ -170,25 +169,73 @@
 	-------------------------------------------------------------------------*/
 
 		public function appendFormattedElement(XMLElement &$wrapper, $data, $encode = false, $mode = null, $entry_id = null){
+			
+			if (self::$compiling == $this->get('id')) return;
+
 			$value = $data['value'];
 
-			if($encode === true){
-				$value = General::sanitize($value);
-			}
+			$wrapper->appendChild(new XMLElement($this->get('element_name'), $value));
+		}
 
-			else{
-				include_once(TOOLKIT . '/class.xsltprocess.php');
+	/*-------------------------------------------------------------------------
+		Compile:
+	-------------------------------------------------------------------------*/
 
-				if(!General::validateXML($data['value'], $errors, false, new XsltProcess)){
-					$value = html_entity_decode($data['value'], ENT_QUOTES, 'UTF-8');
+		public function compile(&$entry) {
+			self::$compiling = $this->get('id');
 
-					if(!General::validateXML($value, $errors, false, new XsltProcess)){
-						$value = General::sanitize($data['value']);
-					}
+			$driver = Symphony::ExtensionManager()->create('hashid_field');
+			$xpath = $driver->getXPath($entry, $this->get('xsltfile'), $this->get('fetch_associated_counts'));
+
+			self::$compiling = 0;
+
+			$entry_id = $entry->get('id');
+			$field_id = $this->get('id');
+			$expression = $this->get('expression');
+			$replacements = array();
+
+			// Find queries:
+			preg_match_all('/\{[^\}]+\}/', $expression, $matches);
+
+			// Find replacements:
+			foreach ($matches[0] as $match) {
+				$result = @$xpath->evaluate('string(' . trim($match, '{}') . ')');
+
+				if (!is_null($result)) {
+					$replacements[$match] = trim($result);
+				}
+
+				else {
+					$replacements[$match] = '';
 				}
 			}
 
-			$wrapper->appendChild(new XMLElement($this->get('element_name'), $value));
+			// Apply replacements:
+			$value = str_replace(
+				array_keys($replacements),
+				array_values($replacements),
+				$expression
+			);
+
+			// Apply formatting:
+			if (!$value_formatted = $this->applyFormatting($value)) {
+				$value_formatted = General::sanitize($value);
+			}
+
+			$data = array(
+				'handle'			=> Lang::createHandle($value),
+				'value'				=> $value,
+				'value_formatted'	=> $value_formatted
+			);
+
+			// Save:
+			$result = Symphony::Database()->update(
+				$data,
+				"tbl_entries_data_{$field_id}",
+				"`entry_id` = '{$entry_id}'"
+			);
+
+			$entry->setData($field_id, $data);
 		}
 
 	/*-------------------------------------------------------------------------
