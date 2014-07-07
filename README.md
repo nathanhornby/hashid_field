@@ -1,4 +1,4 @@
-# Hash Field
+# Hashid Field
 
 Enables you to add a unique and read-only hash to an entry, generated using the entry ID. Ideal for using as an obfuscated URL slug or non-sequential ID. This extension uses the Hashids PHP library: http://www.hashids.org/php/.
 
