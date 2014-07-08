@@ -14,6 +14,10 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Changelog
 
+###0.4
+
+- UX improvements.
+
 ###0.3
 
 - Entries created with events now generate the hash.
