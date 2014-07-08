@@ -13,7 +13,8 @@
 	</authors>
 	<releases>
 		<release version="0.3" date="2014-07-07" min="2.4" max="2.4">
-
+			- Entries created with events now generate the hash.
+			- Fixed issue with displaying a new hash before the old hash has been replaced.
 		</release>
 		<release version="0.2" date="2014-07-07" min="2.4" max="2.4">
 			- Changed extension name.

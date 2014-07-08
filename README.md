@@ -14,6 +14,11 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Changelog
 
+###0.3
+
+- Entries created with events now generate the hash.
+- Fixed issue with displaying a new hash before the old hash has been replaced.
+
 ###0.2
 
 - Changed extension name from hash_field to hashid_field.
