@@ -11,3 +11,20 @@ Your sitename is used as the default salt when the extension is installed. If yo
 1. Upload the `/hashid_field` folder to your Symphony `/extensions` folder
 2. Enable it by selecting "Hashid Field" in the list, choose Enable from the with-selected menu, then click Apply
 3. Add to any section where you need a hash!
+
+## Changelog
+
+###0.3
+
+- Entries created with events now generate the hash.
+- Fixed issue with displaying a new hash before the old hash has been replaced.
+
+###0.2
+
+- Changed extension name from hash_field to hashid_field.
+- Added field settings to allow for different salt's and lengths for each hashid field instance.
+- Hashes are now created when the entry is created, not requiring a re-save.
+
+###0.1
+
+- Extension created! Kind of works.

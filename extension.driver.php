@@ -21,12 +21,17 @@ class extension_Hashid_field extends Extension
             array(
                 'page'      => '/system/preferences/',
                 'delegate'  => 'AddCustomPreferenceFieldsets',
-                'callback'  => '__addPreferences'
+                'callback'  => 'addPreferences'
             ),
             array(
                 'page'      => '/backend/',
                 'delegate'  => 'InitaliseAdminPageHead',
                 'callback'  => 'initaliseAdminPageHead'
+            ),
+            array(
+                'page'      => '/frontend/',
+                'delegate'  => 'EventPostSaveFilter',
+                'callback'  => 'compileFrontendFields'
             )
         );
     }
@@ -81,7 +86,7 @@ class extension_Hashid_field extends Extension
     }
 
     /*-------------------------------------------------------------------------
-        Fields:
+        Fields and compiling:
     -------------------------------------------------------------------------*/
 
     public function registerField($field) {
@@ -99,11 +104,17 @@ class extension_Hashid_field extends Extension
         }
     }
 
+    public function compileFrontendFields($context) {
+        foreach (self::$fields as $field) {
+            $field->compile($context['entry']);
+        }
+    }
+
     /*-------------------------------------------------------------------------
         Preferences:
     -------------------------------------------------------------------------*/
 
-    public function __addPreferences($context) {
+    public function addPreferences($context) {
 
         $settings = Symphony::Configuration()->get('hashid_field');
 
