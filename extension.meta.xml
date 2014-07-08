@@ -3,6 +3,7 @@
 	<name>Hashid Field</name>
 	<description>Enables you to add a unique and read-only hash to an entry, generated using the entry ID.</description>
 	<repo type="github">https://github.com/nathanhornby/hashid_field</repo>
+	<url type="discuss">http://www.getsymphony.com/discuss/thread/106936/</url>
 	<types>
 		<type>Field</type>
 	</types>
