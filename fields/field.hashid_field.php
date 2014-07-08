@@ -125,9 +125,9 @@
 			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', __('Optional')));
 			$label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($value) != 0 ? $value : NULL), 'text', array('readonly' => 'readonly') ));
 
-			// If the hash exists display it, otherwise, display a message.
+			// Display the hash and appripriate messaging.
 			if(strlen($value) != 0){
-				$label->appendChild('<p class="hash-field-box hash">'.$value.'</p>');
+				$label->appendChild('<p class="hash-field-box hash">'.(($value == $data['value'])?$value:$data['value']).'</p>');
 			}else{
 				$label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is saved.</p>');
 			};
