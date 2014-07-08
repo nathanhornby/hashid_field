@@ -14,12 +14,12 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Changelog
 
-#0.2
+###0.2
 
 - Changed extension name from hash_field to hashid_field.
 - Added field settings to allow for different salt's and lengths for each hashid field instance.
 - Hashes are now created when the entry is created, not requiring a re-save.
 
-#0.1
+###0.1
 
 - Extension created! Kind of works.
