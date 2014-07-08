@@ -14,16 +14,16 @@
 }
 .field-hashid_field .hash{
 	cursor: text;
-	font-family: 'Courier New', 'Courier', monospace;
+	font-family: 'Courier New', 'Courier', monospace; /*Better font?*/
 	font-size: 120%;
-	background: #eee;
+	background: #eee; /*Change*/
 	border: 0.1rem solid rgba(0,0,0,0.25);
 }
 .field-hashid_field .hash-info{
-	background: #fff5c4;
+	background: #fff5c4; /*Change*/
 	border: 0.1rem solid #d4cba5;
 }
 .field-hashid_field .hash-warning{
-	background: #ffcecd;
+	background: #ffcecd; /*Change*/
 	border: 0.1rem solid #c29d9c;
 }
