@@ -18,9 +18,9 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Version history
 
-### 0.5 (integration)
+### 0.5
 
-- [X] Remove optional flagging from field settings.
+- Remove optional flagging from field settings.
 
 ### 0.4
 
