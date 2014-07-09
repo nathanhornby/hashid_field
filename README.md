@@ -18,6 +18,12 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Version history
 
+### 1.0
+
+- Notes will be here
+
+*Note: It's not recommended to update between pre v1.0 releases.*
+
 ### 0.5
 
 - Removed optional flagging from field settings.
