@@ -1,5 +1,7 @@
 <?php
 
+	if (!defined('__IN_SYMPHONY__')) die('<h2>Symphony Error</h2><p>You cannot directly access this file</p>');
+
 	require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 	require_once FACE . '/interface.exportablefield.php';
 	require_once FACE . '/interface.importablefield.php';
@@ -11,7 +13,7 @@
 		public function __construct(){
 			parent::__construct();
 			$this->_name = __('Hashid');
-			$this->_required = true;
+			$this->_required = false;
 
 			$default_settings = Symphony::Configuration()->get('hashid_field');
 
@@ -122,7 +124,6 @@
 			$value = $hash;
 
 			$label = Widget::Label($this->get('label'));
-			if($this->get('required') != 'yes') $label->appendChild(new XMLElement('i', __('Optional')));
 			$label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($value) != 0 ? $value : NULL), 'text', array('readonly' => 'readonly') ));
 
 			// Display the hash and appripriate messaging.

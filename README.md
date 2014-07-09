@@ -16,23 +16,27 @@ Hashes are regenereated when a pre-existing entry is saved, so if you change the
 
 Your sitename is used as the default salt when the extension is installed. If your hashes are to be used for any obfuscation purposes then ensure that your salt is as random/chaotic as possible, as two sites using the same salt will share hash values for the same corresponding entry IDs.
 
-## Changelog
+## Version history
 
-###0.4
+### 0.5
+
+- Removed optional flagging from field settings.
+
+### 0.4
 
 - UX improvements.
 
-###0.3
+### 0.3
 
 - Entries created with events now generate the hash.
 - Fixed issue with displaying a new hash before the old hash has been replaced.
 
-###0.2
+### 0.2
 
 - Changed extension name from hash_field to hashid_field.
 - Added field settings to allow for different salt's and lengths for each hashid field instance.
 - Hashes are now created when the entry is created, not requiring a re-save.
 
-###0.1
+### 0.1
 
 - Extension created! Kind of works.
