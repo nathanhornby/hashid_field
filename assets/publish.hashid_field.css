@@ -2,28 +2,49 @@
 	display: none;
 }
 .field-hashid_field .hash-field-box{
-	font-size: 100%;
+	padding: 0.6rem;
+}
+.field-hashid_field .hash{
+	letter-spacing: 0.1rem;
+	cursor: text;
+	font-size: 120%;
+	background: #efefef url('hash.png') no-repeat 1rem center;
+	background-size: 12px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 	width: 100%;
-	height: 2.2rem;
-	padding: 0.2rem 0.3rem;
-	margin-bottom: 0.3rem;
+	padding: 0.8rem 0.6rem 0.8rem 2.9rem;
+	margin-bottom: 0rem;
 	margin-top: 0.2rem;
-}
-.field-hashid_field .hash{
-	cursor: text;
-	font-family: 'Courier New', 'Courier', monospace;
-	font-size: 120%;
-	background: #eee;
-	border: 0.1rem solid rgba(0,0,0,0.25);
+	border-top: 0.1rem solid rgba(0,0,0,0.25);
+	border-bottom: 0.1rem solid rgba(0,0,0,0.25);
 }
 .field-hashid_field .hash-info{
-	background: #fff5c4;
-	border: 0.1rem solid #d4cba5;
+	color: #75693f;
+	background: #fff6d6;
+	border-bottom: 0.1rem solid #e6ce7c;
 }
 .field-hashid_field .hash-warning{
-	background: #ffcecd;
-	border: 0.1rem solid #c29d9c;
+	color: #814343;
+	background: #ffe4e4;
+	border-bottom: 0.1rem solid #ffb4b4;
+}
+/* Breakpoints based on maximum hash length of 32 characters */
+@media all and (max-width: 1000px){
+	.field-hashid_field .hash-field-box{
+		padding: 0.2rem 0.3rem;
+	}
+	.field-hashid_field .hash{
+		font-size: 100%;
+		background: #efefef;
+	}
+}
+@media all and (max-width: 800px){
+	.field-hashid_field .hash-field-box{
+		padding: 0.2rem 0rem;
+	}
+	.field-hashid_field .hash{
+		letter-spacing: 0rem;
+	}
 }
