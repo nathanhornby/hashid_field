@@ -19,7 +19,7 @@
     
     <releases>
         <release version="1.0" date="2014-07-XX" min="2.4" max="2.4">
-            - Nothing yet.
+            - Titied up code and style inconsistencies, lots of comments added.
         </release>
         <release version="0.5" date="2014-07-09" min="2.4" max="2.4">
             - Removed optional flagging from field settings.
@@ -40,5 +40,5 @@
             - Extension created! Kind of works.
         </release>
     </releases>
-    
+
 </extension>

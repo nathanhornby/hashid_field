@@ -148,7 +148,7 @@
                 $label->appendChild('<p class="hash-field-box hash-warning">This hash will be regenereated when the entry is saved.</p>');
             };
 
-            // Error flagging (redundant? Can an error flag for this field?)
+            // Error flagging
             if($flagWithError != NULL)
             {
                 $wrapper->appendChild( Widget::Error($label, $flagWithError) );

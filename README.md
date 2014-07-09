@@ -20,7 +20,7 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ### 1.0
 
-- Notes will be here
+- Titied up code and style inconsistencies, lots of comments added.
 
 *Note: It's not recommended to update between pre v1.0 releases.*
 
