@@ -16,11 +16,11 @@ Hashes are regenereated when a pre-existing entry is saved, so if you change the
 
 Your sitename is used as the default salt when the extension is installed. If your hashes are to be used for any obfuscation purposes then ensure that your salt is as random/chaotic as possible, as two sites using the same salt will share hash values for the same corresponding entry IDs.
 
-## Changelog
+## Version history
 
 ### 0.5 (integration)
 
-- [] Remove optional flagging from field settings.
+- [X] Remove optional flagging from field settings.
 
 ### 0.4
 
