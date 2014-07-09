@@ -129,7 +129,8 @@
 			if(strlen($value) != 0){
 				$label->appendChild('<p class="hash-field-box hash">'.(($value == $data['value'])?$value:$data['value']).'</p>');
 			}else{
-				$label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is saved.</p>');
+				$label->appendChild('<p class="hash-field-box hash">&#160;</p>');
+				$label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is created.</p>');
 			};
 			if($data['value'] != $hash && $data['value'] != NULL){
 				$label->appendChild('<p class="hash-field-box hash-warning">This hash will be regenereated when the entry is saved.</p>');
