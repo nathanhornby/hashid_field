@@ -20,7 +20,7 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ### 0.5
 
-- Remove optional flagging from field settings.
+- Removed optional flagging from field settings.
 
 ### 0.4
 
