@@ -94,7 +94,7 @@
 
             // Hash length input
             $label = Widget::Label(__('Hash length'));
-            $input = Widget::Input('fields['.$this->get('sortorder').'][length]', (string)$this->get('length'));
+            $input = Widget::Input('fields['.$this->get('sortorder').'][length]', (string)$this->get('length'), 'number');
             $label->setAttribute('class', 'column');
             $label->appendChild($input);
             $div->appendChild($label);

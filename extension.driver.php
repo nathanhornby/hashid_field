@@ -141,24 +141,28 @@ class extension_Hashid_field extends Extension
         $sitename = Symphony::Configuration()->get('sitename', 'general');
 
         // Create Preferences fieldset
-        $group = new XMLElement('fieldset', '<legend>' . __('Hashid Field') . '</legend>', array('class' => 'settings'));
+        $fieldset = new XMLElement('fieldset', '<legend>' . __('Hashid Field') . '</legend>', array('class' => 'settings'));
+        $group = new XMLElement('div', NULL, array('class' => 'two columns'));
+        $fieldset->appendChild($group);
 
         // Default salt input
         $select = Widget::Input('settings[hashid_field][hash_salt]', $settings['hash_salt']);
         $label = Widget::Label(__('Default salt'), $select);
+        $label->setAttribute('class', 'column');
         $group->appendChild($label);
         $help = new XMLElement('p', __('Set to your sitename by default.'), array('class' => 'help'));
-        $group->appendChild($help);
+        $label->appendChild($help);
         
         // Default hash length
-        $select = Widget::Input('settings[hashid_field][hash_length]', $settings['hash_length']);
+        $select = Widget::Input('settings[hashid_field][hash_length]', $settings['hash_length'], 'number');
         $label = Widget::Label(__('Default hash length'), $select);
+        $label->setAttribute('class', 'column');
         $group->appendChild($label);
         $help = new XMLElement('p', __('A maximum of 32 characters are saved for each hash.'), array('class' => 'help'));
-        $group->appendChild($help);
+        $label->appendChild($help);
 
         // Add the fields to the fieldset
-        $context['wrapper']->appendChild($group);
+        $context['wrapper']->appendChild($fieldset);
     }
 
 }
