@@ -23,6 +23,8 @@ Your sitename is used as the default salt when the extension is installed. If yo
 ### 1.0
 
 - Changed hash length settings fields to only accept numbers.
+- Checked compatability with older versions of Symphony, doesn't work pre-2.4.
+- Changed layout of preferences.
 - Titied up code and style inconsistencies, lots of comments added.
 
 *Note: It's not recommended to update between pre v1.0 releases.*
