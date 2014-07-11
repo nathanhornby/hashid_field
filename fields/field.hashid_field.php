@@ -133,7 +133,7 @@
             $label = Widget::Label($this->get('label'));
             $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($hash) != 0 ? $hash : NULL), 'text', array('readonly' => 'readonly') ));
 
-            // Display the hash and appripriate messaging.
+            // Display the hash and appropriate messaging.
             if(strlen($hash) != 0)
             {
                 $label->appendChild('<p class="hash-field-box hash">'.(($hash == $data['value'])?$hash:$data['value']).'</p>');

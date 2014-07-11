@@ -18,8 +18,10 @@
     </authors>
     
     <releases>
-        <release version="1.0" date="2014-07-XX" min="2.4" max="2.4">
+        <release version="1.0" date="2014-07-11" min="2.4" max="2.4">
             - Changed hash length settings fields to only accept numbers.
+            - Checked compatability with older versions of Symphony, doesn't work pre-2.4.
+            - Changed layout of preferences.
             - Titied up code and style inconsistencies, lots of comments added.
         </release>
         <release version="0.5" date="2014-07-09" min="2.4" max="2.4">
