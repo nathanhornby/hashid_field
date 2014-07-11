@@ -2,6 +2,8 @@
 
 Enables you to add a unique and read-only hash to an entry, generated using the entry ID. Ideal for using as an obfuscated URL slug or non-sequential ID. This extension uses the Hashids PHP library: http://www.hashids.org/php/.
 
+[![Code Climate](https://codeclimate.com/github/nathanhornby/hashid_field.png)](https://codeclimate.com/github/nathanhornby/hashid_field)
+
 ## Installation and usage
  
 1. Upload the `/hashid_field` folder to your Symphony `/extensions` folder
