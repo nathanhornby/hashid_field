@@ -14,7 +14,9 @@ This field requires no interaction from the end-user as it automatically populat
 
 The minimum hash length and the salt can be set for each instance of the hashid field, and you can set defaults in your Symphony preferences. The field will store 32 characters, if you set the minimum hash length to more than 32 characters it will be truncated.
 
-Hashes are regenereated when a pre-existing entry is saved, so if you change the salt or hash length and update an entry, its hash will change. So it's generally advised to set-and-forget unless that's your intention. This is especially important if you plan on using the hashes for URL slugs. The field will warn the user if the hash is going to regenerate.
+Hashes are regenereated when a pre-existing entry is saved, so if you change the salt or hash length and update an entry, its hash will change (otherwise it will remain the same). So it's generally advised to set-and-forget unless that's your intention. This is especially important if you plan on using the hashes for URL slugs. The field will warn the user if the hash is going to regenerate.
+
+You can also regenerate Hashid fields via the 'With selected' toggle on the publish page. This works under the same conditions as above.
 
 Your sitename is used as the default salt when the extension is installed. If your hashes are to be used for any obfuscation purposes then ensure that your salt is as random/chaotic as possible, as two sites using the same salt will share hash values for the same corresponding entry IDs.
 
