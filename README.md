@@ -22,7 +22,7 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ### 1.1
 
-- [ ] Add publish toggle for regenerating Hashid's.
+- Added publish toggle for regenerating Hashid's.
 
 ### 1.0
 
