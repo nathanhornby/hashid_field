@@ -33,20 +33,6 @@
         {
             return true;
         }
-        public function getToggleStates()
-        {
-            return array(
-                'regenerate' => __('Regenerate hash')
-            );
-        }
-        public function toggleFieldData(array $data, $newState, $entry_id = null)
-        {
-            $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
-            $hash = $hash->encrypt($entry_id);
-
-            $data['value'] = $hash;
-            return $data;
-        }
         public function canFilter()
         {
             return true;
@@ -175,6 +161,25 @@
             {
                 $wrapper->appendChild($label);
             }
+        }
+
+        /*-------------------------------------------------------------------------
+            Publish toggle
+        -------------------------------------------------------------------------*/
+
+        public function getToggleStates()
+        {
+            return array(
+                'regenerate' => __('Regenerate hash')
+            );
+        }
+        public function toggleFieldData(array $data, $newState, $entry_id = null)
+        {
+            $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+            $hash = $hash->encrypt($entry_id);
+
+            $data['value'] = $hash;
+            return $data;
         }
 
         /*-------------------------------------------------------------------------
