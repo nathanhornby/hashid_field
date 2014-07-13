@@ -6,8 +6,8 @@ Enables you to add a unique and read-only hash to an entry, generated using the 
 
 ## Installation and usage
  
-1. Upload the `hashid_field` folder to your Symphony `/extensions` folder
-2. Enable it by selecting **Hashid Field** in the Extensions list, choose Enable from the "With Selected…" dropdown, then click "Apply"
+1. Upload the `hashid_field` folder to your Symphony `/extensions` folder.
+2. Enable it by selecting **Hashid Field** in the Extensions list, choose *Enable* from the "With Selected…" dropdown, then click *Apply*.
 3. Add to any section where you need a hash!
 
 This field requires no interaction from the end-user as it automatically populates when the entry is created.
