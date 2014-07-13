@@ -213,7 +213,7 @@
         {
             if (self::$compiling == $this->get('id')) return;
 
-            $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value']));
+            $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value'], array('salt'=>$this->get('salt'),'length'=>$this->get('length'))));
         }
 
         /*-------------------------------------------------------------------------
