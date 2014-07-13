@@ -29,6 +29,10 @@
             Definition
         -------------------------------------------------------------------------*/
 
+        public function canToggle()
+        {
+            return true;
+        }
         public function canFilter()
         {
             return true;
@@ -160,6 +164,25 @@
         }
 
         /*-------------------------------------------------------------------------
+            Publish toggle
+        -------------------------------------------------------------------------*/
+
+        public function getToggleStates()
+        {
+            return array(
+                'regenerate' => __('Regenerate hash')
+            );
+        }
+        public function toggleFieldData(array $data, $newState, $entry_id = null)
+        {
+            $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+            $hash = $hash->encrypt($entry_id);
+
+            $data['value'] = $hash;
+            return $data;
+        }
+
+        /*-------------------------------------------------------------------------
             Input
         -------------------------------------------------------------------------*/
 
@@ -190,7 +213,7 @@
         {
             if (self::$compiling == $this->get('id')) return;
 
-            $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value']));
+            $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value'], array('salt'=>$this->get('salt'),'length'=>$this->get('length'))));
         }
 
         /*-------------------------------------------------------------------------
