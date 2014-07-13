@@ -36,7 +36,7 @@
         public function getToggleStates()
         {
             return array(
-                'regenerate' => __('Regenerate')
+                'regenerate' => __('Regenerate hash')
             );
         }
         public function toggleFieldData(array $data, $newState, $entry_id = null)
