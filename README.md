@@ -22,6 +22,10 @@ Your sitename is used as the default salt when the extension is installed. If yo
 
 ## Version history
 
+### 1.2
+
+- Notes here please
+
 ### 1.1
 
 - Added publish toggle for regenerating Hashid's.
