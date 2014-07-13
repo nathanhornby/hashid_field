@@ -25,6 +25,7 @@ Your sitename is used as the default salt when the extension is installed. If yo
 ### 1.1
 
 - Added publish toggle for regenerating Hashid's.
+- Added hash salt and length as attributes to output XML for more advanced implementations that may want access to them.
 
 ### 1.0
 
