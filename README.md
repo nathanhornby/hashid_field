@@ -10,55 +10,51 @@ Enables you to add a unique and read-only hash to an entry, generated using the 
 2. Enable it by selecting **Hashid Field** in the Extensions list, choose *Enable* from the "With Selected…" dropdown, then click *Apply*.
 3. Add to any section where you need a hash!
 
-This field requires no interaction from the end-user as it automatically populates when the entry is created.
-
-The minimum hash length and the salt can be set for each instance of the hashid field, and you can set defaults in your Symphony preferences. The field will store 32 characters, if you set the minimum hash length to more than 32 characters it will be truncated.
+The field requires no interaction from the end-user as it automatically populates when the entry is created.
 
 Hashes are regenereated when a pre-existing entry is saved, so if you change the salt or hash length and update an entry, its hash will change (otherwise it will remain the same). So it's generally advised to set-and-forget unless that's your intention. This is especially important if you plan on using the hashes for URL slugs. The field will warn the user if the hash is going to regenerate.
 
 You can also regenerate Hashid fields via the 'With selected' toggle on the publish page. This works under the same conditions as above.
 
+**The minimum hash length and the salt can be set for each instance of the hashid field, and you can set defaults in your Symphony preferences.**
+
+### Hash salt
+
 Your sitename is used as the default salt when the extension is installed. If your hashes are to be used for any obfuscation purposes then ensure that your salt is as random/chaotic as possible, as two sites using the same salt will share hash values for the same corresponding entry IDs.
 
-## Version history
+### Hash length
 
-### 1.2
+The default hash length is set to `5` when the extension is installed. This is sufficient for the vast majority of cases, and you're highly unlikely to hit the unique limit in a single section. The field supports up to 32 characters, lengths set above `32` will be truncated.
 
-- Notes here please
+## How to's
 
-### 1.1
+### Using the hash for URL obfuscation
 
-- Added publish toggle for regenerating Hashid's.
-- Added hash salt and length as attributes to output XML for more advanced implementations that may want access to them.
+This ones easy; just set a 'hashid' parameter on your page and filter by your hasid field in the datasource.
 
-### 1.0
+### Using the hash for ID obfuscation in events
 
-- Changed hash length settings fields to only accept numbers.
-- Checked compatability with older versions of Symphony, doesn't work pre-2.4.
-- Changed layout of preferences.
-- Titied up code and style inconsistencies, lots of comments added.
+There are a few ways of using the hashid with events, but my preferred method is to use the hash in place of the entry ID. i.e.
 
-*Note: It's not recommended to update between pre v1.0 releases.*
+`<input type="text" name="id" value="{section/entry/hashid_field}" />`
 
-### 0.5
+Then you just have to swap this out for your entry ID in your `__trigger` function in the relevant event:
 
-- Removed optional flagging from field settings.
+`
+protected function __trigger()
+{
+    // If the ID isn't a number then it's a hash, so convert it to the entry ID
+    if( isset($_POST['id']) && !is_numeric($_POST['id']) )
+    {
+        require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 
-### 0.4
+        $hash = new Hashids\Hashids( 'TheSaltForThisField' , 6 );
+        $decrypt_array = $hash->decrypt($_POST['id']);
+        $_POST['id'] = $decrypt_array[0];              
+    };
 
-- UX improvements.
+    return $result;
+}
+`
 
-### 0.3
-
-- Entries created with events now generate the hash.
-- Fixed issue with displaying a new hash before the old hash has been replaced.
-
-### 0.2
-
-- Changed extension name from hash_field to hashid_field.
-- Added field settings to allow for different salt's and lengths for each hashid field instance.
-- Hashes are now created when the entry is created, not requiring a re-save.
-
-### 0.1
-
-- Extension created! Kind of works.
+Where `TheSaltForThisField` and `6` are your hash salt and hash length.
