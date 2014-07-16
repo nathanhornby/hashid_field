@@ -148,7 +148,7 @@
             };
             if($data['value'] != $hash && $data['value'] != NULL)
             {
-                $label->appendChild('<p class="hash-field-box hash-warning">The current hash (<strong>'.$data['value'].'</strong>) will be replaced with the new hash when the entry is saved.</p>');
+                $label->appendChild('<p class="hash-field-box hash-warning">The current hash <strong>'.$data['value'].'</strong> will be replaced with the new hash when the entry is saved.</p>');
             };
 
             // Error flagging
