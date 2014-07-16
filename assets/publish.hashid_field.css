@@ -1,50 +1,31 @@
-.field-hashid_field input[readonly="readonly"]{
-    display: none;
-}
 .field-hashid_field .hash-field-box{
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     padding: 0.6rem;
-}
-.field-hashid_field .hash{
-    letter-spacing: 0.1rem;
-    cursor: text;
-    font-size: 120%;
-    background: #efefef url('hash.png') no-repeat 1rem center;
-    background-size: 12px;
-    width: 100%;
-    padding: 0.8rem 0.6rem 0.8rem 2.9rem;
-    margin-bottom: 0rem;
-    margin-top: 0.2rem;
-    border-top: 0.1rem solid rgba(0,0,0,0.25);
-    border-bottom: 0.1rem solid rgba(0,0,0,0.25);
+    -webkit-border-bottom-right-radius: 0.4rem;
+    -webkit-border-bottom-left-radius: 0.4rem;
+    -moz-border-radius-bottomright: 0.4rem;
+    -moz-border-radius-bottomleft: 0.4rem;
+    border-bottom-right-radius: 0.4rem;
+    border-bottom-left-radius: 0.4rem;
 }
 .field-hashid_field .hash-info{
     color: #75693f;
     background: #fff6d6;
     border-bottom: 0.1rem solid #e6ce7c;
+    border-left: 0.1rem solid #e6ce7c;
+    border-right: 0.1rem solid #e6ce7c;
 }
 .field-hashid_field .hash-warning{
     color: #814343;
     background: #ffe4e4;
     border-bottom: 0.1rem solid #ffb4b4;
+    border-left: 0.1rem solid #ffb4b4;
+    border-right: 0.1rem solid #ffb4b4;
 }
-/* Breakpoints based on maximum hash length of 32 characters */
-@media all and (max-width: 1000px){
+@media all and (max-width: 960px){
     .field-hashid_field .hash-field-box{
         padding: 0.2rem 0.3rem;
-    }
-    .field-hashid_field .hash{
-        font-size: 100%;
-        background: #efefef;
-    }
-}
-@media all and (max-width: 800px){
-    .field-hashid_field .hash-field-box{
-        padding: 0.2rem 0rem;
-    }
-    .field-hashid_field .hash{
-        letter-spacing: 0rem;
     }
 }

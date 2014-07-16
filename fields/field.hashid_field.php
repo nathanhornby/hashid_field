@@ -135,16 +135,15 @@
 
             // Create hidden read-only input for storing the hash for submission
             $label = Widget::Label($this->get('label'));
-            $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($hash) != 0 ? $hash : NULL), 'text', array('readonly' => 'readonly') ));
 
             // Display the hash and appropriate messaging.
             if(strlen($hash) != 0)
             {
-                $label->appendChild('<p class="hash-field-box hash">'.(($hash == $data['value'])?$hash:$data['value']).'</p>');
+                $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (($hash == $data['value'])?$hash:$data['value']), 'text', array('readonly' => 'readonly') ));
             }
             else
             {
-                $label->appendChild('<p class="hash-field-box hash">&#160;</p>');
+                $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, NULL, 'text', array('readonly' => 'readonly') ));
                 $label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is created.</p>');
             };
             if($data['value'] != $hash && $data['value'] != NULL)
