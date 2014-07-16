@@ -139,7 +139,7 @@
             // Display the hash and appropriate messaging.
             if(strlen($hash) != 0)
             {
-                $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (($hash == $data['value'])?$hash:$data['value']), 'text', array('readonly' => 'readonly') ));
+                $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, $hash, 'text', array('readonly' => 'readonly') ));
             }
             else
             {
@@ -148,7 +148,7 @@
             };
             if($data['value'] != $hash && $data['value'] != NULL)
             {
-                $label->appendChild('<p class="hash-field-box hash-warning">This hash will be regenereated when the entry is saved.</p>');
+                $label->appendChild('<p class="hash-field-box hash-warning">The current hash (<strong>'.$data['value'].'</strong>) will be replaced with the new hash when the entry is saved.</p>');
             };
 
             // Error flagging
