@@ -40,7 +40,7 @@ There are a few ways of using the hashid with events, but my preferred method is
 
 Then you just have to swap this out for your entry ID in your `__trigger` function in the relevant event:
 
-`
+```
 protected function __trigger()
 {
     // If the ID isn't a number then it's a hash, so convert it to the entry ID
@@ -55,6 +55,6 @@ protected function __trigger()
 
     return $result;
 }
-`
+```
 
-Where `TheSaltForThisField` and `6` are your hash salt and hash length.
+Where `'TheSaltForThisField'` and `6` are your hash salt and hash length. These need to be manually set in the event and are static values.
