@@ -144,7 +144,7 @@
             else
             {
                 $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, NULL, 'text', array('readonly' => 'readonly') ));
-                $label->appendChild('<p class="hash-field-box hash-info">The hash will be genereated when the entry is created.</p>');
+                $label->appendChild('<p class="hash-field-box hash-info">The hash will be generated when the entry is created.</p>');
             };
             if($data['value'] != $hash && $data['value'] != NULL)
             {
