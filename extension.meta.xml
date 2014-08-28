@@ -20,7 +20,7 @@
     
     <releases>
         <release version="1.2.1" date="2014-08-27" min="2.4" max="2.4">
-            - Added support for 'not:' in data source filtering.
+            - Added support for 'not:' in data source filtering. (Thanks @nitriques!)
         </release>
         <release version="1.2" date="2014-07-17" min="2.4" max="2.4">
             - Scaled back styling.
