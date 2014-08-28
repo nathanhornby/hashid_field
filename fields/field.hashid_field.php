@@ -310,7 +310,10 @@
                 foreach($data as $value)
                 {
                     $this->_key++;
-                    $value = $this->cleanValue($value);
+                    
+                    $value = $this->separateValueFromModifier($this->cleanValue($value));
+                    $equality = $value['equality'];
+                    $value = $value['value'];
                     $joins .= "
                         LEFT JOIN
                         `tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->_key}
@@ -318,7 +321,7 @@
                     ";
                     $where .= "
                         AND (
-                        t{$field_id}_{$this->_key}.value = '{$value}'
+                        t{$field_id}_{$this->_key}.value $equality '{$value}'
                     )";
                 }
             }
@@ -332,7 +335,10 @@
                 }
 
                 $this->_key++;
+                $separatedData = $this->separateValueFromModifier($data[0]);
+                $data[0] = $separatedData['value'];
                 $data = implode("', '", $data);
+                $inclusion = $separatedData['inclusion'];
                 $joins .= "
                     LEFT JOIN
                     `tbl_entries_data_{$field_id}` AS t{$field_id}_{$this->_key}
@@ -340,12 +346,28 @@
                 ";
                 $where .= "
                     AND (
-                    t{$field_id}_{$this->_key}.value IN ('{$data}')
+                    t{$field_id}_{$this->_key}.value $inclusion ('{$data}')
                     )
                 ";
             }
 
             return true;
+        }
+
+        private function separateValueFromModifier($value) {
+            $ret = array(
+                'value' => $value,
+                'equality' => '=',
+                'inclusion' => 'in'
+            );
+
+            if (strpos($value, 'not:') !== FALSE) {
+                $ret['equality'] = '!=';
+                $ret['inclusion'] = 'NOT IN';
+                $ret['value'] = trim(str_replace('not:', '', $value));
+            }
+
+            return $ret;
         }
 
     }
