@@ -30,7 +30,7 @@ The default hash length is set to `5` when the extension is installed. This is s
 
 ### Using the hash for URL obfuscation
 
-This ones easy; just set a 'hashid' parameter on your page and filter by your hasid field in the datasource.
+This ones easy; just set a 'hashid' parameter on your page and filter by your hashid field in the datasource.
 
 ### Using the hash for ID obfuscation in events
 
