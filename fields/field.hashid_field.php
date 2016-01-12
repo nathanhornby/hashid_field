@@ -120,7 +120,7 @@
             $fields['length'] = max(1, (int)$this->get('length'));
             $fields['salt'] = $this->get('salt');
 
-            if(!FieldManager::saveSettings($id, $fields)) return false;
+            return FieldManager::saveSettings($id, $fields);
         }
 
         /*-------------------------------------------------------------------------
