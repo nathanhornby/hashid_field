@@ -103,9 +103,9 @@ class extension_Hashid_field extends Extension
         Compiling
     -------------------------------------------------------------------------*/
 
-    public function registerField($field)
+    public function registerField(Field $field)
     {
-        self::$fields[] = $field;
+        self::$fields[$field->get('id')] = $field;
     }
 
     public function compileBackendFields($context)
