@@ -19,7 +19,10 @@
     </authors>
     
     <releases>
-        <release version="1.2.2" date="2014-08-27" min="2.4" max="2.6.x">
+        <release version="1.2.3" date="2016-01-14" min="2.4" max="2.6.x">
+            - Prevent the field from being registered multiple times.
+        </release>
+        <release version="1.2.2" date="2016-01-13" min="2.4" max="2.6.x">
             - Make sure FieldHashid_field::commit() always returns a value
         </release>
         <release version="1.2.1" date="2014-08-27" min="2.4" max="2.5.x">
