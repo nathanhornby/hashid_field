@@ -220,7 +220,7 @@
             $field_id = $this->get('id');
             $data = $entry->getData($field_id);
 
-            if($data == null)
+            if(empty($data) || !isset($data['value']) || empty($data['value']))
             {
                 $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
                 $hash = $hash->encrypt($entry_id);
