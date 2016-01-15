@@ -8,9 +8,6 @@
 
     class FieldHashid_field extends Field implements ExportableField, ImportableField
     {
-
-        protected static $compiling = 0;
-
         public function __construct()
         {
             parent::__construct();
@@ -210,8 +207,6 @@
 
         public function appendFormattedElement(XMLElement &$wrapper, $data, $encode = false, $mode = null, $entry_id = null)
         {
-            if (self::$compiling == $this->get('id')) return;
-
             $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value'], array('salt'=>$this->get('salt'),'length'=>$this->get('length'))));
         }
 
@@ -221,12 +216,6 @@
 
         public function compile(&$entry)
         {
-            self::$compiling = $this->get('id');
-
-            $driver = Symphony::ExtensionManager()->create('hashid_field');
-
-            self::$compiling = 0;
-
             $entry_id = $entry->get('id');
             $field_id = $this->get('id');
             $data = $entry->getData($field_id);
