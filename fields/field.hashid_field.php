@@ -225,7 +225,9 @@
                 $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
                 $hash = $hash->encrypt($entry_id);
                 $result = Symphony::Database()->insert(array('value' => $hash, 'entry_id' => $entry_id), "tbl_entries_data_".$field_id );
+                return $hash;
             }
+            return $data['value'];
         }
 
         /*-------------------------------------------------------------------------
