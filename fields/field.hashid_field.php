@@ -161,6 +161,9 @@
 
         public function prepareTextValue($data, $entry_id = null)
         {
+            if (!$entry_id) {
+                return null;
+            }
             // Generate hash from entry ID
             $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
             return $hash->encrypt($entry_id);
