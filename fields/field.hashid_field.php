@@ -8,9 +8,6 @@
 
     class FieldHashid_field extends Field implements ExportableField, ImportableField
     {
-
-        protected static $compiling = 0;
-
         public function __construct()
         {
             parent::__construct();
@@ -162,6 +159,16 @@
             }
         }
 
+        public function prepareTextValue($data, $entry_id = null)
+        {
+            if (!$entry_id) {
+                return null;
+            }
+            // Generate hash from entry ID
+            $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+            return $hash->encrypt($entry_id);
+        }
+
         /*-------------------------------------------------------------------------
             Publish toggle
         -------------------------------------------------------------------------*/
@@ -210,8 +217,6 @@
 
         public function appendFormattedElement(XMLElement &$wrapper, $data, $encode = false, $mode = null, $entry_id = null)
         {
-            if (self::$compiling == $this->get('id')) return;
-
             $wrapper->appendChild(new XMLElement($this->get('element_name'), $data['value'], array('salt'=>$this->get('salt'),'length'=>$this->get('length'))));
         }
 
@@ -221,22 +226,18 @@
 
         public function compile(&$entry)
         {
-            self::$compiling = $this->get('id');
-
-            $driver = Symphony::ExtensionManager()->create('hashid_field');
-
-            self::$compiling = 0;
-
             $entry_id = $entry->get('id');
             $field_id = $this->get('id');
             $data = $entry->getData($field_id);
 
-            if($data == null)
+            if(empty($data) || !isset($data['value']) || empty($data['value']))
             {
                 $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
                 $hash = $hash->encrypt($entry_id);
                 $result = Symphony::Database()->insert(array('value' => $hash, 'entry_id' => $entry_id), "tbl_entries_data_".$field_id );
+                return $hash;
             }
+            return $data['value'];
         }
 
         /*-------------------------------------------------------------------------
