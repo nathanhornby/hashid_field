@@ -152,7 +152,7 @@ class extension_Hashid_field extends Extension
         $group->appendChild($label);
         $help = new XMLElement('p', __('Set to your sitename by default.'), array('class' => 'help'));
         $label->appendChild($help);
-        
+
         // Default hash length
         $select = Widget::Input('settings[hashid_field][hash_length]', $settings['hash_length'], 'number');
         $label = Widget::Label(__('Default hash length'), $select);

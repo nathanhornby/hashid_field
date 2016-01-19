@@ -311,7 +311,7 @@
                 foreach($data as $value)
                 {
                     $this->_key++;
-                    
+
                     $value = $this->separateValueFromModifier($this->cleanValue($value));
                     $equality = $value['equality'];
                     $value = $value['value'];
