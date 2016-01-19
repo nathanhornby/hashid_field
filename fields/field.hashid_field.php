@@ -6,7 +6,7 @@ require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 require_once FACE . '/interface.exportablefield.php';
 require_once FACE . '/interface.importablefield.php';
 
-class FieldHashid_field extends Field implements ExportableField, ImportableField
+class FieldHashid_field extends Field implements ExportableField
 {
     public function __construct()
     {
@@ -235,32 +235,6 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         );
 
         return $result;
-    }
-
-    /*-------------------------------------------------------------------------
-        Import
-    -------------------------------------------------------------------------*/
-
-    public function getImportModes()
-    {
-        return array(
-            'getValue'     =>  ImportableField::STRING_VALUE,
-            'getPostdata'  =>  ImportableField::ARRAY_VALUE
-        );
-    }
-
-    public function prepareImportValue($data, $mode, $entry_id = null)
-    {
-        $message = $status = null;
-        $modes = (object) $this->getImportModes();
-
-        if ($mode === $modes->getValue) {
-            return $data;
-        } elseif ($mode === $modes->getPostdata) {
-            return $this->processRawFieldData($data, $status, $message, true, $entry_id);
-        }
-
-        return null;
     }
 
     /*-------------------------------------------------------------------------

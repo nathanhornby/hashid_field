@@ -18,6 +18,16 @@ class extension_Hashid_field extends Extension
                 'callback'  => 'compileBackendFields'
             ),
             array(
+                'page'      => '/xmlimporter/importers/run/',
+                'delegate'  => 'XMLImporterEntryPostCreate',
+                'callback'  => 'compileBackendFields'
+            ),
+            array(
+                'page'      => '/xmlimporter/importers/run/',
+                'delegate'  => 'XMLImporterEntryPostEdit',
+                'callback'  => 'compileBackendFields'
+            ),
+            array(
                 'page'      => '/system/preferences/',
                 'delegate'  => 'AddCustomPreferenceFieldsets',
                 'callback'  => 'addPreferences'
