@@ -134,15 +134,13 @@ class FieldHashid_field extends Field implements ExportableField
         $label = Widget::Label($this->get('label'));
 
         // Display the hash and appropriate messaging.
-        if (strlen($hash) != 0) {
-            $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, $hash, 'text', array('readonly' => 'readonly') ));
-        } else {
-            $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, NULL, 'text', array('readonly' => 'readonly') ));
-            $label->appendChild('<p class="hash-field-box hash-info">The hash will be generated when the entry is created.</p>');
-        };
-        if ($data['value'] != $hash && $data['value'] != NULL) {
-            $label->appendChild('<p class="hash-field-box hash-warning">The current hash <strong>'.$data['value'].'</strong> will be replaced with the new hash when the entry is saved.</p>');
-        };
+        $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, $data['value'], 'text', array('readonly' => 'readonly') ));
+
+        if (strlen($data['value']) === 0) {
+            $label->appendChild('<p class="hash-field-box hash-info">The hash will be generated when the entry is saved.</p>');
+        } elseif ($data['value'] !== $hash) {
+            $label->appendChild('<p class="hash-field-box hash-warning">The hash will be replaced when the entry is saved.</p>');
+        }
 
         // Error flagging
         if ($flagWithError != null) {
