@@ -199,11 +199,9 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
     {
         $status = self::__OK__;
 
-        if ( strlen( trim($data) ) == 0 ) return array();
-
-        $result = array('value' => $data);
-
-        return $result;
+        return array(
+            'value' => null
+        );
     }
 
     /*-------------------------------------------------------------------------
@@ -219,21 +217,24 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         Compile
     -------------------------------------------------------------------------*/
 
-    public function compile(&$entry)
+    public function compile($entry)
     {
         $entry_id = $entry->get('id');
         $field_id = $this->get('id');
         $data = $entry->getData($field_id);
 
-        if (empty($data) || !isset($data['value']) || empty($data['value'])) {
-            $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
-            $hash = $hash->encrypt($entry_id);
-            $result = Symphony::Database()->insert(array('value' => $hash, 'entry_id' => $entry_id), "tbl_entries_data_".$field_id );
+        $hash = new Hashids\Hashids($this->get('salt'), $this->get('length'));
+        $hash = $hash->encrypt($entry_id);
 
-            return $hash;
-        }
+        $result = Symphony::Database()->update(
+            array(
+                'value' => $hash
+            ),
+            'tbl_entries_data_'.$field_id,
+            '`entry_id`='.$entry_id
+        );
 
-        return $data['value'];
+        return $result;
     }
 
     /*-------------------------------------------------------------------------
