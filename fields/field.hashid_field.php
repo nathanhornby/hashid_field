@@ -189,9 +189,6 @@ class FieldHashid_field extends Field implements ExportableField
 
     public function checkPostFieldData($data, &$message, $entry_id = null)
     {
-        $driver = Symphony::ExtensionManager()->create('hashid_field');
-        $driver->registerField($this);
-
         return self::__OK__;
     }
 

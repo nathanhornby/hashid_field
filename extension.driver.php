@@ -2,8 +2,6 @@
 
 class extension_Hashid_field extends Extension
 {
-    protected static $fields = array();
-
     public function getSubscribedDelegates()
     {
         return array(
@@ -108,30 +106,21 @@ class extension_Hashid_field extends Extension
         Compiling
     -------------------------------------------------------------------------*/
 
-    public function registerField(Field $field)
-    {
-        self::$fields[$field->get('id')] = $field;
-    }
-
     public function compileBackendFields($context)
     {
-        if (empty(self::$fields) ) {
-            self::$fields = $context['section']->fetchFields('hashid_field');
-        }
+        $fields = $context['section']->fetchFields('hashid_field');
 
-        foreach (self::$fields as $field) {
+        foreach ($fields as $field) {
             $field->compile($context['entry']);
         }
     }
 
     public function compileFrontendFields($context)
     {
-        if (empty(self::$fields) ) {
-            $section = SectionManager::fetch($context['entry']->get('section_id'));
-            self::$fields = $section->fetchFields('hashid_field');
-        }
+        $section = SectionManager::fetch($context['entry']->get('section_id'));
+        $fields = $section->fetchFields('hashid_field');
 
-        foreach (self::$fields as $field) {
+        foreach ($fields as $field) {
             $field->compile($context['entry']);
         }
     }
@@ -172,5 +161,4 @@ class extension_Hashid_field extends Extension
         // Add the fields to the fieldset
         $context['wrapper']->appendChild($fieldset);
     }
-
 }
