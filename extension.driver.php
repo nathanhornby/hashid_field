@@ -135,7 +135,7 @@ class extension_Hashid_field extends Extension
 
         // Create Preferences fieldset
         $fieldset = new XMLElement('fieldset', '<legend>' . __('Hashid Field') . '</legend>', array('class' => 'settings'));
-        $group = new XMLElement('div', NULL, array('class' => 'two columns'));
+        $group = new XMLElement('div', null, array('class' => 'two columns'));
         $fieldset->appendChild($group);
 
         // Default salt input

@@ -83,7 +83,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         parent::displaySettingsPanel($wrapper, $errors);
 
         // Options wrapper
-        $div = new XMLElement('div', NULL, array('class' => 'two columns'));
+        $div = new XMLElement('div', null, array('class' => 'two columns'));
         $wrapper->appendChild($div);
 
         // Hash salt input
@@ -145,7 +145,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         };
 
         // Error flagging
-        if ($flagWithError != NULL) {
+        if ($flagWithError != null) {
             $wrapper->appendChild( Widget::Error($label, $flagWithError) );
         } else {
             $wrapper->appendChild($label);
@@ -187,7 +187,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         Input
     -------------------------------------------------------------------------*/
 
-    public function checkPostFieldData($data, &$message, $entry_id=NULL)
+    public function checkPostFieldData($data, &$message, $entry_id = null)
     {
         $driver = Symphony::ExtensionManager()->create('hashid_field');
         $driver->registerField($this);
