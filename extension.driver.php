@@ -116,6 +116,11 @@ class extension_Hashid_field extends Extension
 
     public function compileFrontendFields($context)
     {
+        if (empty(self::$fields) ) {
+            $section = SectionManager::fetch($context['entry']->get('section_id'));
+            self::$fields = $section->fetchFields('hashid_field');
+        }
+
         foreach (self::$fields as $field) {
             $field->compile($context['entry']);
         }
