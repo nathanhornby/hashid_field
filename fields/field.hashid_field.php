@@ -88,14 +88,14 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
 
         // Hash salt input
         $label = Widget::Label(__('Hash salt'));
-        $input = Widget::Input('fields['.$this->get('sortorder').'][salt]', (string)$this->get('salt'));
+        $input = Widget::Input('fields['.$this->get('sortorder').'][salt]', (string) $this->get('salt'));
         $label->setAttribute('class', 'column');
         $label->appendChild($input);
         $div->appendChild($label);
 
         // Hash length input
         $label = Widget::Label(__('Hash length'));
-        $input = Widget::Input('fields['.$this->get('sortorder').'][length]', (string)$this->get('length'), 'number');
+        $input = Widget::Input('fields['.$this->get('sortorder').'][length]', (string) $this->get('length'), 'number');
         $label->setAttribute('class', 'column');
         $label->appendChild($input);
         $div->appendChild($label);
@@ -114,7 +114,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
 
         $fields = array();
         $fields['field_id'] = $id;
-        $fields['length'] = max(1, (int)$this->get('length'));
+        $fields['length'] = max(1, (int) $this->get('length'));
         $fields['salt'] = $this->get('salt');
 
         return FieldManager::saveSettings($id, $fields);
@@ -134,27 +134,20 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         $label = Widget::Label($this->get('label'));
 
         // Display the hash and appropriate messaging.
-        if(strlen($hash) != 0)
-        {
+        if (strlen($hash) != 0) {
             $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, $hash, 'text', array('readonly' => 'readonly') ));
-        }
-        else
-        {
+        } else {
             $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, NULL, 'text', array('readonly' => 'readonly') ));
             $label->appendChild('<p class="hash-field-box hash-info">The hash will be generated when the entry is created.</p>');
         };
-        if($data['value'] != $hash && $data['value'] != NULL)
-        {
+        if ($data['value'] != $hash && $data['value'] != NULL) {
             $label->appendChild('<p class="hash-field-box hash-warning">The current hash <strong>'.$data['value'].'</strong> will be replaced with the new hash when the entry is saved.</p>');
         };
 
         // Error flagging
-        if($flagWithError != NULL)
-        {
+        if ($flagWithError != NULL) {
             $wrapper->appendChild( Widget::Error($label, $flagWithError) );
-        }
-        else
-        {
+        } else {
             $wrapper->appendChild($label);
         }
     }
@@ -166,6 +159,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         }
         // Generate hash from entry ID
         $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+
         return $hash->encrypt($entry_id);
     }
 
@@ -185,6 +179,7 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         $hash = $hash->encrypt($entry_id);
 
         $data['value'] = $hash;
+
         return $data;
     }
 
@@ -230,13 +225,14 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         $field_id = $this->get('id');
         $data = $entry->getData($field_id);
 
-        if(empty($data) || !isset($data['value']) || empty($data['value']))
-        {
+        if (empty($data) || !isset($data['value']) || empty($data['value'])) {
             $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
             $hash = $hash->encrypt($entry_id);
             $result = Symphony::Database()->insert(array('value' => $hash, 'entry_id' => $entry_id), "tbl_entries_data_".$field_id );
+
             return $hash;
         }
+
         return $data['value'];
     }
 
@@ -255,14 +251,11 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
     public function prepareImportValue($data, $mode, $entry_id = null)
     {
         $message = $status = null;
-        $modes = (object)$this->getImportModes();
+        $modes = (object) $this->getImportModes();
 
-        if($mode === $modes->getValue)
-        {
+        if ($mode === $modes->getValue) {
             return $data;
-        }
-        else if($mode === $modes->getPostdata)
-        {
+        } elseif ($mode === $modes->getPostdata) {
             return $this->processRawFieldData($data, $status, $message, true, $entry_id);
         }
 
@@ -283,11 +276,10 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
 
     public function prepareExportValue($data, $mode, $entry_id = null)
     {
-        $modes = (object)$this->getExportModes();
+        $modes = (object) $this->getExportModes();
 
         // Export unformatted
-        if ($mode === $modes->getUnformatted || $mode === $modes->getPostdata)
-        {
+        if ($mode === $modes->getUnformatted || $mode === $modes->getPostdata) {
             return isset($data['value']) ? $data['value'] : null;
         }
 
@@ -302,14 +294,10 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
     {
         $field_id = $this->get('id');
 
-        if( self::isFilterRegex($data[0]) )
-        {
+        if ( self::isFilterRegex($data[0]) ) {
             $this->buildRegexSQL($data[0], array('value'), $joins, $where);
-        }
-        else if($andOperation)
-        {
-            foreach($data as $value)
-            {
+        } elseif ($andOperation) {
+            foreach ($data as $value) {
                 $this->_key++;
 
                 $value = $this->separateValueFromModifier($this->cleanValue($value));
@@ -325,13 +313,10 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
                     t{$field_id}_{$this->_key}.value $equality '{$value}'
                 )";
             }
-        }
-        else
-        {
+        } else {
             if( !is_array($data) ) $data = array($data);
 
-            foreach($data as &$value)
-            {
+            foreach ($data as &$value) {
                 $value = $this->cleanValue($value);
             }
 
@@ -355,7 +340,8 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
         return true;
     }
 
-    private function separateValueFromModifier($value) {
+    private function separateValueFromModifier($value)
+    {
         $ret = array(
             'value' => $value,
             'equality' => '=',
@@ -370,5 +356,4 @@ class FieldHashid_field extends Field implements ExportableField, ImportableFiel
 
         return $ret;
     }
-
 }

@@ -44,8 +44,7 @@ class extension_Hashid_field extends Extension
         $callback = Symphony::Engine()->getPageCallback();
 
         // Add custom stylesheet to the publish page
-        if($callback['driver'] == 'publish' && $callback['context']['page'] != 'index')
-        {
+        if ($callback['driver'] == 'publish' && $callback['context']['page'] != 'index') {
             Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/hashid_field/assets/publish.hashid_field.css');
         }
     }
@@ -56,8 +55,7 @@ class extension_Hashid_field extends Extension
 
     public function install()
     {
-        try
-        {
+        try {
             // Create the field table in the database
             Symphony::Database()->query(
                 "CREATE TABLE IF NOT EXISTS `tbl_fields_hashid_field` (
@@ -75,9 +73,7 @@ class extension_Hashid_field extends Extension
             Symphony::Configuration()->set('hash_salt', Symphony::Configuration()->get('sitename', 'general'), 'hashid_field');
             Symphony::Configuration()->set('hash_length', '5', 'hashid_field');
             Symphony::Configuration()->write();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -86,8 +82,7 @@ class extension_Hashid_field extends Extension
 
     public function uninstall()
     {
-        if(parent::uninstall() == true)
-        {
+        if (parent::uninstall() == true) {
             // Drop the field table from the database
             Symphony::Database()->query("DROP TABLE `tbl_fields_hashid_field`");
 
@@ -110,20 +105,18 @@ class extension_Hashid_field extends Extension
 
     public function compileBackendFields($context)
     {
-        if( empty(self::$fields) )
-        {
+        if (empty(self::$fields) ) {
             self::$fields = $context['section']->fetchFields('hashid_field');
         }
 
-        foreach(self::$fields as $field)
-        {
+        foreach (self::$fields as $field) {
             $field->compile($context['entry']);
         }
     }
 
-    public function compileFrontendFields($context) {
-        foreach(self::$fields as $field)
-        {
+    public function compileFrontendFields($context)
+    {
+        foreach (self::$fields as $field) {
             $field->compile($context['entry']);
         }
     }
