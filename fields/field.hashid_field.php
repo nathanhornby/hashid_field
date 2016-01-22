@@ -224,7 +224,7 @@ class FieldHashid_field extends Field implements ExportableField
         Compile
     -------------------------------------------------------------------------*/
 
-    public function compile($entry)
+    public function compile(&$entry)
     {
         $entry_id = $entry->get('id');
         $field_id = $this->get('id');
@@ -233,13 +233,18 @@ class FieldHashid_field extends Field implements ExportableField
         $hash = new Hashids($this->get('salt'), $this->get('length'));
         $hash = $hash->encode($entry_id);
 
+        $data = array(
+            'value' => $hash
+        );
+
+        // Save
         $result = Symphony::Database()->update(
-            array(
-                'value' => $hash
-            ),
+            $data,
             'tbl_entries_data_'.$field_id,
             '`entry_id`='.$entry_id
         );
+        // Update the entry object
+        $entry->setData($field_id, $data);
 
         return $result;
     }
