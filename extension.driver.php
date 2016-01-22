@@ -90,7 +90,7 @@ class extension_Hashid_field extends Extension
 
     public function uninstall()
     {
-        if (parent::uninstall() == true) {
+        if (parent::uninstall()) {
             // Drop the field table from the database
             Symphony::Database()->query("DROP TABLE `tbl_fields_hashid_field`");
 
