@@ -235,7 +235,7 @@ class FieldHashid_field extends Field implements ExportableField
 
         $data = array(
             'value' => $hash
-        )
+        );
 
         // Save
         $result = Symphony::Database()->update(
