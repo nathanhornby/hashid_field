@@ -2,9 +2,11 @@
 
 if (!defined('__IN_SYMPHONY__')) die('<h2>Symphony Error</h2><p>You cannot directly access this file</p>');
 
-require_once EXTENSIONS . '/hashid_field/lib/Hashids.php';
 require_once FACE . '/interface.exportablefield.php';
 require_once FACE . '/interface.importablefield.php';
+
+require_once EXTENSIONS . '/hashid_field/vendor/autoload.php';
+use Hashids\Hashids;
 
 class FieldHashid_field extends Field implements ExportableField
 {
@@ -127,8 +129,8 @@ class FieldHashid_field extends Field implements ExportableField
     public function displayPublishPanel(XMLElement &$wrapper, $data = null, $flagWithError = null, $fieldnamePrefix = null, $fieldnamePostfix = null, $entry_id = null)
     {
         // Generate hash from entry ID
-        $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
-        $hash = $hash->encrypt($entry_id);
+        $hash = new Hashids($this->get('salt'), $this->get('length'));
+        $hash = $hash->encode($entry_id);
 
         // Create hidden read-only input for storing the hash for submission
         $label = Widget::Label($this->get('label'));
@@ -156,9 +158,9 @@ class FieldHashid_field extends Field implements ExportableField
             return null;
         }
         // Generate hash from entry ID
-        $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
+        $hash = new Hashids($this->get('salt'), $this->get('length'));
 
-        return $hash->encrypt($entry_id);
+        return $hash->encode($entry_id);
     }
 
     /*-------------------------------------------------------------------------
@@ -171,10 +173,11 @@ class FieldHashid_field extends Field implements ExportableField
             'regenerate' => __('Regenerate hash')
         );
     }
+
     public function toggleFieldData(array $data, $newState, $entry_id = null)
     {
-        $hash = new Hashids\Hashids( $this->get('salt') , $this->get('length') );
-        $hash = $hash->encrypt($entry_id);
+        $hash = new Hashids($this->get('salt'), $this->get('length'));
+        $hash = $hash->encode($entry_id);
 
         $data['value'] = $hash;
 
@@ -218,8 +221,8 @@ class FieldHashid_field extends Field implements ExportableField
         $field_id = $this->get('id');
         $data = $entry->getData($field_id);
 
-        $hash = new Hashids\Hashids($this->get('salt'), $this->get('length'));
-        $hash = $hash->encrypt($entry_id);
+        $hash = new Hashids($this->get('salt'), $this->get('length'));
+        $hash = $hash->encode($entry_id);
 
         $result = Symphony::Database()->update(
             array(
