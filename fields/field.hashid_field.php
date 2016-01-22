@@ -32,22 +32,27 @@ class FieldHashid_field extends Field implements ExportableField
     {
         return true;
     }
+
     public function canFilter()
     {
         return true;
     }
+
     public function canPrePopulate()
     {
         return true;
     }
+
     public function isSortable()
     {
         return false;
     }
+
     public function allowDatasourceOutputGrouping()
     {
         return false;
     }
+
     public function allowDatasourceParamOutput()
     {
         return true;
@@ -75,7 +80,7 @@ class FieldHashid_field extends Field implements ExportableField
         Settings
     -------------------------------------------------------------------------*/
 
-    public function setFromPOST( array $settings = array() )
+    public function setFromPOST(array $settings = array())
     {
         parent::setFromPOST($settings);
     }
@@ -108,11 +113,15 @@ class FieldHashid_field extends Field implements ExportableField
 
     public function commit()
     {
-        if(!parent::commit()) return false;
+        if (!parent::commit()) {
+            return false;
+        }
 
         $id = $this->get('id');
 
-        if($id === false) return false;
+        if ($id === false) {
+            return false;
+        }
 
         $fields = array();
         $fields['field_id'] = $id;
@@ -146,7 +155,7 @@ class FieldHashid_field extends Field implements ExportableField
 
         // Error flagging
         if ($flagWithError != null) {
-            $wrapper->appendChild( Widget::Error($label, $flagWithError) );
+            $wrapper->appendChild(Widget::Error($label, $flagWithError));
         } else {
             $wrapper->appendChild($label);
         }
@@ -267,7 +276,7 @@ class FieldHashid_field extends Field implements ExportableField
     {
         $field_id = $this->get('id');
 
-        if ( self::isFilterRegex($data[0]) ) {
+        if (self::isFilterRegex($data[0])) {
             $this->buildRegexSQL($data[0], array('value'), $joins, $where);
         } elseif ($andOperation) {
             foreach ($data as $value) {
@@ -287,7 +296,9 @@ class FieldHashid_field extends Field implements ExportableField
                 )";
             }
         } else {
-            if( !is_array($data) ) $data = array($data);
+            if (!is_array($data)) {
+                $data = array($data);
+            }
 
             foreach ($data as &$value) {
                 $value = $this->cleanValue($value);
