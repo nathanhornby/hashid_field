@@ -161,17 +161,6 @@ class FieldHashid_field extends Field implements ExportableField
         }
     }
 
-    public function prepareTextValue($data, $entry_id = null)
-    {
-        if (!$entry_id) {
-            return null;
-        }
-        // Generate hash from entry ID
-        $hash = new Hashids($this->get('salt'), $this->get('length'));
-
-        return $hash->encode($entry_id);
-    }
-
     /*-------------------------------------------------------------------------
         Publish toggle
     -------------------------------------------------------------------------*/
