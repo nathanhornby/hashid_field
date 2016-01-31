@@ -202,7 +202,7 @@ class FieldHashid_field extends Field implements ExportableField
         return self::__OK__;
     }
 
-    public function processRawFieldData($data, &$status, &$message=null, $simulate = false, $entry_id = null)
+    public function processRawFieldData($data, &$status, &$message = null, $simulate = false, $entry_id = null)
     {
         $status = self::__OK__;
 
