@@ -231,20 +231,25 @@ class FieldHashid_field extends Field implements ExportableField
         $data = $entry->getData($field_id);
 
         $hash = new Hashids($this->get('salt'), $this->get('length'));
-        $hash = $hash->encode($entry_id);
-
-        $data = array(
-            'value' => $hash
-        );
+        $value = $hash->encode($entry_id);
 
         // Save
-        $result = Symphony::Database()->update(
-            $data,
+        $result = Symphony::Database()->insert(
+            array(
+                'entry_id' => $entry_id,
+                'value' => $value
+            ),
             'tbl_entries_data_'.$field_id,
-            '`entry_id`='.$entry_id
+            true
         );
+
         // Update the entry object
-        $entry->setData($field_id, $data);
+        $entry->setData(
+            $field_id,
+            array(
+                'value' => $value
+            )
+        );
 
         return $result;
     }
