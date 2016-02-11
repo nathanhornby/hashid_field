@@ -72,8 +72,8 @@ class extension_Hashid_field extends Extension
                     `size` int(3) unsigned NOT NULL,
                     `salt` VARCHAR(255) NOT NULL,
                     `length` int(2) unsigned NOT NULL,
-                    PRIMARY KEY  (`id`),
-                    KEY `field_id` (`field_id`)
+                    PRIMARY KEY (`id`),
+                    UNIQUE KEY `field_id` (`field_id`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
             );
 
@@ -88,6 +88,27 @@ class extension_Hashid_field extends Extension
         return true;
     }
 
+    public function update($previousVersion = false)
+    {
+        if (version_compare($previousVersion, '2.0.0', '<')) {
+            Symphony::Database()->query(
+                "ALTER TABLE `tbl_fields_hashid_field`
+                    DROP KEY `field_id`,
+                    ADD UNIQUE KEY `field_id` (`field_id`);"
+            );
+
+            $hashFields = FieldManager::fetch(null, null, 'ASC', 'id', 'hashid_field');
+            foreach ($hashFields as $field) {
+                Symphony::Database()->query(
+                    "ALTER TABLE `tbl_entries_data_".$field->get('id')."`
+                        DROP KEY `value`,
+                        ADD UNIQUE KEY `value` (`value`),
+                        MODIFY COLUMN `value` varchar(255) NOT NULL;"
+                );
+            }
+        }
+    }
+
     public function uninstall()
     {
         if (parent::uninstall()) {
@@ -97,6 +118,7 @@ class extension_Hashid_field extends Extension
             // Remove the field defaults from manifest/config.php
             Symphony::Configuration()->remove('hashid_field','hashid_field');
             Symphony::Configuration()->write();
+            return true;
         }
 
         return false;

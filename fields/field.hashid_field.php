@@ -68,10 +68,10 @@ class FieldHashid_field extends Field implements ExportableField
             "CREATE TABLE IF NOT EXISTS `tbl_entries_data_".$this->get('id')."` (
                 `id` int(11) unsigned NOT NULL auto_increment,
                 `entry_id` int(11) unsigned NOT NULL,
-                `value` varchar(32) default NULL,
+                `value` varchar(255) NOT NULL,
                 PRIMARY KEY  (`id`),
                 UNIQUE KEY `entry_id` (`entry_id`),
-                KEY `value` (`value`)
+                UNIQUE KEY `value` (`value`)
             ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
         );
     }
@@ -194,10 +194,9 @@ class FieldHashid_field extends Field implements ExportableField
     public function processRawFieldData($data, &$status, &$message = null, $simulate = false, $entry_id = null)
     {
         $status = self::__OK__;
-
-        return array(
-            'value' => null
-        );
+        // return null now since the hash will be saved later
+        // when the delegates are called
+        return null;
     }
 
     /*-------------------------------------------------------------------------
