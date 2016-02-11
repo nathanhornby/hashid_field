@@ -19,6 +19,17 @@
     </authors>
 
     <releases>
+        <release version="2.0.0" date="2016-01-20" min="2.4" max="2.6.x">
+            - Improved coding style
+            - [#28](https://github.com/nathanhornby/hashid_field/issues/28) Make compile method do all the work
+            - [#31](https://github.com/nathanhornby/hashid_field/issues/31) Fix bug when editing from frontend
+            - Return value of the compile method is boolean now (but the entry object is updated)
+            - Importers must rely on compile methods
+            - Simplify, drop registerField method (see also #31)
+            - Fix and simplify publish panel
+            - Update Hashids to v1.0.5, using composer now
+            - Use database insert instead of update, so the compile method will work without committing the entry beforehand
+        </release>
         <release version="1.3.0" date="2016-01-18" min="2.4" max="2.6.x">
             - Make the compile method returns the hash id
             - Removed dead code and members
