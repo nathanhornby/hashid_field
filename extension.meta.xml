@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension id="hashid_field" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
-    
+
     <name>Hashid Field</name>
     <description>Enables you to add a unique and read-only hash to an entry, generated using the entry ID.</description>
-    
+
     <repo type="github">https://github.com/nathanhornby/hashid_field</repo>
     <url type="discuss">http://www.getsymphony.com/discuss/thread/106936/</url>
-    
+
     <types>
         <type>Field</type>
         <type>Hash</type>
     </types>
-    
+
     <authors>
         <author>
             <name github="nathanhornby" symphony="nathanhornby">Nathan Hornby</name>
         </author>
     </authors>
-    
+
     <releases>
         <release version="1.3.0" date="2016-01-18" min="2.4" max="2.6.x">
             - Make the compile method returns the hash id

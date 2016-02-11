@@ -2,8 +2,6 @@
 
 class extension_Hashid_field extends Extension
 {
-    protected static $fields = array();
-
     public function getSubscribedDelegates()
     {
         return array(
@@ -15,6 +13,16 @@ class extension_Hashid_field extends Extension
             array(
                 'page'      => '/publish/new/',
                 'delegate'  => 'EntryPostCreate',
+                'callback'  => 'compileBackendFields'
+            ),
+            array(
+                'page'      => '/xmlimporter/importers/run/',
+                'delegate'  => 'XMLImporterEntryPostCreate',
+                'callback'  => 'compileBackendFields'
+            ),
+            array(
+                'page'      => '/xmlimporter/importers/run/',
+                'delegate'  => 'XMLImporterEntryPostEdit',
                 'callback'  => 'compileBackendFields'
             ),
             array(
@@ -44,8 +52,7 @@ class extension_Hashid_field extends Extension
         $callback = Symphony::Engine()->getPageCallback();
 
         // Add custom stylesheet to the publish page
-        if($callback['driver'] == 'publish' && $callback['context']['page'] != 'index')
-        {
+        if ($callback['driver'] == 'publish' && $callback['context']['page'] != 'index') {
             Administration::instance()->Page->addStylesheetToHead(URL . '/extensions/hashid_field/assets/publish.hashid_field.css');
         }
     }
@@ -56,8 +63,7 @@ class extension_Hashid_field extends Extension
 
     public function install()
     {
-        try
-        {
+        try {
             // Create the field table in the database
             Symphony::Database()->query(
                 "CREATE TABLE IF NOT EXISTS `tbl_fields_hashid_field` (
@@ -75,9 +81,7 @@ class extension_Hashid_field extends Extension
             Symphony::Configuration()->set('hash_salt', Symphony::Configuration()->get('sitename', 'general'), 'hashid_field');
             Symphony::Configuration()->set('hash_length', '5', 'hashid_field');
             Symphony::Configuration()->write();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             return false;
         }
 
@@ -86,8 +90,7 @@ class extension_Hashid_field extends Extension
 
     public function uninstall()
     {
-        if(parent::uninstall() == true)
-        {
+        if (parent::uninstall()) {
             // Drop the field table from the database
             Symphony::Database()->query("DROP TABLE `tbl_fields_hashid_field`");
 
@@ -103,27 +106,21 @@ class extension_Hashid_field extends Extension
         Compiling
     -------------------------------------------------------------------------*/
 
-    public function registerField(Field $field)
-    {
-        self::$fields[$field->get('id')] = $field;
-    }
-
     public function compileBackendFields($context)
     {
-        if( empty(self::$fields) )
-        {
-            self::$fields = $context['section']->fetchFields('hashid_field');
-        }
+        $fields = $context['section']->fetchFields('hashid_field');
 
-        foreach(self::$fields as $field)
-        {
+        foreach ($fields as $field) {
             $field->compile($context['entry']);
         }
     }
 
-    public function compileFrontendFields($context) {
-        foreach(self::$fields as $field)
-        {
+    public function compileFrontendFields($context)
+    {
+        $section = SectionManager::fetch($context['entry']->get('section_id'));
+        $fields = $section->fetchFields('hashid_field');
+
+        foreach ($fields as $field) {
             $field->compile($context['entry']);
         }
     }
@@ -142,7 +139,7 @@ class extension_Hashid_field extends Extension
 
         // Create Preferences fieldset
         $fieldset = new XMLElement('fieldset', '<legend>' . __('Hashid Field') . '</legend>', array('class' => 'settings'));
-        $group = new XMLElement('div', NULL, array('class' => 'two columns'));
+        $group = new XMLElement('div', null, array('class' => 'two columns'));
         $fieldset->appendChild($group);
 
         // Default salt input
@@ -152,7 +149,7 @@ class extension_Hashid_field extends Extension
         $group->appendChild($label);
         $help = new XMLElement('p', __('Set to your sitename by default.'), array('class' => 'help'));
         $label->appendChild($help);
-        
+
         // Default hash length
         $select = Widget::Input('settings[hashid_field][hash_length]', $settings['hash_length'], 'number');
         $label = Widget::Label(__('Default hash length'), $select);
@@ -164,5 +161,4 @@ class extension_Hashid_field extends Extension
         // Add the fields to the fieldset
         $context['wrapper']->appendChild($fieldset);
     }
-
 }

@@ -5,7 +5,7 @@ Enables you to add a unique and read-only hash to an entry, generated using the 
 [![Code Climate](https://codeclimate.com/github/nathanhornby/hashid_field.png)](https://codeclimate.com/github/nathanhornby/hashid_field)
 
 ## Installation and usage
- 
+
 1. Upload the `hashid_field` folder to your Symphony `/extensions` folder.
 2. Enable it by selecting **Hashid Field** in the Extensions list, choose *Enable* from the "With Selected…" dropdown, then click *Apply*.
 3. Add to any section where you need a hash!
@@ -50,7 +50,7 @@ protected function __trigger()
 
         $hash = new Hashids\Hashids( 'TheSaltForThisField' , 6 );
         $decrypt_array = $hash->decrypt($_POST['id']);
-        $_POST['id'] = $decrypt_array[0];              
+        $_POST['id'] = $decrypt_array[0];
     };
 
     return $result;
