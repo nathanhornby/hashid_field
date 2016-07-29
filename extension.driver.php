@@ -107,7 +107,7 @@ class extension_Hashid_field extends Extension
             }
         }
 
-        if (version_compare($previousVersion, '2.0.0', '<=')) {
+        if (version_compare($previousVersion, '2.0.1', '<')) {
             Symphony::Database()->query(
                 "ALTER TABLE `tbl_fields_hashid_field`
                     DROP COLUMN `size`;"
