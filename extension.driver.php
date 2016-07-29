@@ -69,7 +69,6 @@ class extension_Hashid_field extends Extension
                 "CREATE TABLE IF NOT EXISTS `tbl_fields_hashid_field` (
                     `id` int(11) unsigned NOT NULL auto_increment,
                     `field_id` int(11) unsigned NOT NULL,
-                    `size` int(3) unsigned NOT NULL,
                     `salt` VARCHAR(255) NOT NULL,
                     `length` int(2) unsigned NOT NULL,
                     PRIMARY KEY (`id`),

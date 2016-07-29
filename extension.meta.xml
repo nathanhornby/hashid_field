@@ -19,6 +19,9 @@
     </authors>
 
     <releases>
+        <release version="2.0.1" date="2016-07-29" min="2.4" max="2.6.x">
+            - Fix and Removed size from Database
+        </release>
         <release version="2.0.0" date="2016-02-11" min="2.4" max="2.6.x">
             - Hash can now be up to 255 characters long
             - The hash value column in the database now enforces uniqueness
