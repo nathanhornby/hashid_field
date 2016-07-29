@@ -127,6 +127,7 @@ class FieldHashid_field extends Field implements ExportableField
         $fields['field_id'] = $id;
         $fields['length'] = max(1, (int) $this->get('length'));
         $fields['salt'] = $this->get('salt');
+        $fields['size'] = $this->get(1, (int) $this->get('size'));
 
         return FieldManager::saveSettings($id, $fields);
     }
