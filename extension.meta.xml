@@ -19,6 +19,11 @@
     </authors>
 
     <releases>
+        <release version="3.0.0" date="TBA" min="4.0.0" max="4.x.x">
+            <![CDATA[
+- Update for Symphony 4.x
+            ]]>
+        </release>
         <release version="2.0.2" date="2018-07-31" min="2.4" max="2.6.x">
             <![CDATA[
 - Critical fix: Case sensitivity support (#40)
