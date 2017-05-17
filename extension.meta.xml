@@ -19,7 +19,7 @@
     </authors>
 
     <releases>
-        <release version="3.0.0" date="TBA" min="4.0.0" max="4.x.x">
+        <release version="3.0.0" date="TBA" min="4.0.0" max="4.x.x" php-min="5.6.x" php-max="7.x.x">
             <![CDATA[
 - Update for Symphony 4.x
             ]]>
@@ -28,7 +28,6 @@
             <![CDATA[
 - Critical fix: Case sensitivity support (#40)
             ]]>
-        </release>
         <release version="2.0.1" date="2016-07-29" min="2.4" max="2.6.x">
             <![CDATA[
 - Removed `size` from field table (#37)
