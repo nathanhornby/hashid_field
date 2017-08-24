@@ -67,10 +67,10 @@ class extension_Hashid_field extends Extension
             // Create the field table in the database
             Symphony::Database()->query(
                 "CREATE TABLE IF NOT EXISTS `tbl_fields_hashid_field` (
-                    `id` int(11) unsigned NOT NULL auto_increment,
-                    `field_id` int(11) unsigned NOT NULL,
+                    `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                    `field_id` INT(11) UNSIGNED NOT NULL,
                     `salt` VARCHAR(255) NOT NULL,
-                    `length` int(2) unsigned NOT NULL,
+                    `length` INT(2) UNSIGNED NOT NULL,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `field_id` (`field_id`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
@@ -102,7 +102,7 @@ class extension_Hashid_field extends Extension
                     "ALTER TABLE `tbl_entries_data_".$field->get('id')."`
                         DROP KEY `value`,
                         ADD UNIQUE KEY `value` (`value`),
-                        MODIFY COLUMN `value` varchar(255) NOT NULL;"
+                        MODIFY COLUMN `value` VARCHAR(255) NOT NULL;"
                 );
             }
         }

@@ -66,9 +66,9 @@ class FieldHashid_field extends Field implements ExportableField
     {
         return Symphony::Database()->query(
             "CREATE TABLE IF NOT EXISTS `tbl_entries_data_".$this->get('id')."` (
-                `id` int(11) unsigned NOT NULL auto_increment,
-                `entry_id` int(11) unsigned NOT NULL,
-                `value` varchar(255) NOT NULL,
+                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+                `entry_id` INT(11) UNSIGNED NOT NULL,
+                `value` VARCHAR(255) NOT NULL,
                 PRIMARY KEY  (`id`),
                 UNIQUE KEY `entry_id` (`entry_id`),
                 UNIQUE KEY `value` (`value`)
@@ -330,7 +330,7 @@ class FieldHashid_field extends Field implements ExportableField
             'inclusion' => 'in'
         );
 
-        if (strpos($value, 'not:') !== FALSE) {
+        if (strpos($value, 'not:') !== false) {
             $ret['equality'] = '!=';
             $ret['inclusion'] = 'NOT IN';
             $ret['value'] = trim(str_replace('not:', '', $value));
