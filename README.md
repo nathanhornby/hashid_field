@@ -50,8 +50,8 @@ protected function __trigger()
         require_once EXTENSIONS . '/hashid_field/vendor/hashids/hashids/lib/Hashids/Hashids.php';
 
         $hash = new Hashids\Hashids( 'TheSaltForThisField' , 6 );
-        $decrypt_array = $hash->decode($_POST['id']);
-        $_POST['id'] = $decrypt_array[0];
+        $decode_array = $hash->decode($_POST['id']);
+        $_POST['id'] = $decode_array[0];
     };
 
     return $result;
