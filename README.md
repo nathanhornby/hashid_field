@@ -46,8 +46,8 @@ protected function __trigger()
     // If the ID isn't a number then it's a hash, so convert it to the entry ID
     if( isset($_POST['id']) && !is_numeric($_POST['id']) )
     {
-        require_once EXTENSIONS . '/hashid_field/vendor/hashids/hashids/lib/Hashids/HashGenerator.php';
-        require_once EXTENSIONS . '/hashid_field/vendor/hashids/hashids/lib/Hashids/Hashids.php';
+        require_once EXTENSIONS . '/hashid_field/vendor/autoload.php';
+        useHashids;
 
         $hash = new Hashids\Hashids( 'TheSaltForThisField' , 6 );
         $decode_array = $hash->decode($_POST['id']);
