@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <extension id="hashid_field" status="released" xmlns="http://getsymphony.com/schemas/extension/1.0">
-
-    <name>Hashid Field</name>
+    <name>Field: Hashid</name>
     <description>Enables you to add a unique and read-only hash to an entry, generated using the entry ID.</description>
 
     <repo type="github">https://github.com/nathanhornby/hashid_field</repo>

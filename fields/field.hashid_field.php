@@ -64,16 +64,26 @@ class FieldHashid_field extends Field implements ExportableField
 
     public function createTable()
     {
-        return Symphony::Database()->query(
-            "CREATE TABLE IF NOT EXISTS `tbl_entries_data_".$this->get('id')."` (
-                `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-                `entry_id` INT(11) UNSIGNED NOT NULL,
-                `value` VARCHAR(255) NOT NULL,
-                PRIMARY KEY  (`id`),
-                UNIQUE KEY `entry_id` (`entry_id`),
-                UNIQUE KEY `value` (`value`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
-        );
+        return Symphony::Database()
+            ->create('tbl_entries_data_' . $this->get('id'))
+            ->ifNotExists()
+            ->charset('utf8')
+            ->collate('utf8_unicode_ci')
+            ->fields([
+                'id' => [
+                    'type' => 'int(11)',
+                    'auto' => true,
+                ],
+                'entry_id' => 'int(11)',
+                'value' => 'varchar(255)',
+            ])
+            ->keys([
+                'id' => 'primary',
+                'entry_id' => 'unique',
+                'value' => 'unique',
+            ])
+            ->execute()
+            ->success();
     }
 
     /*-------------------------------------------------------------------------
