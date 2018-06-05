@@ -4,6 +4,7 @@ if (!defined('__IN_SYMPHONY__')) die('<h2>Symphony Error</h2><p>You cannot direc
 
 require_once FACE . '/interface.exportablefield.php';
 require_once FACE . '/interface.importablefield.php';
+require_once EXTENSIONS . '/hashid_field/lib/class.entryqueryhashidadapter.php';
 
 require_once EXTENSIONS . '/hashid_field/vendor/autoload.php';
 use Hashids\Hashids;
@@ -13,6 +14,8 @@ class FieldHashid_field extends Field implements ExportableField
     public function __construct()
     {
         parent::__construct();
+        $this->entryQueryFieldAdapter = new EntryQueryHashidAdapter($this);
+
         $this->_name = __('Hashid');
         $this->_required = false;
 
