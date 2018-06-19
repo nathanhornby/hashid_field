@@ -22,6 +22,7 @@
             <![CDATA[
 - Update for Symphony 4.x
 - Code refactoring for Database and EQFA
+- Replace deprecated method fetch() by select()
             ]]>
         </release>
         <release version="2.0.2" date="2018-07-31" min="2.4" max="2.6.x">

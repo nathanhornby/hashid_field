@@ -109,7 +109,13 @@ class extension_Hashid_field extends Extension
                 ->execute()
                 ->success();
 
-            $hashFields = FieldManager::fetch(null, null, 'ASC', 'id', 'hashid_field');
+            $hashFields = (new FieldManager)
+                ->select()
+                ->sort('id', 'asc')
+                ->type('hashid_field')
+                ->execute()
+                ->rows();
+
             foreach ($hashFields as $field) {
                 Symphony::Database()
                     ->alter('tbl_entries_data_' . $field->get('id'))
@@ -183,7 +189,11 @@ class extension_Hashid_field extends Extension
 
     public function compileFrontendFields($context)
     {
-        $section = SectionManager::fetch($context['entry']->get('section_id'));
+        $section = (new SectionManager)
+            ->select()
+            ->section($context['entry']->get('section_id'))
+            ->execute()
+            ->next();
         $fields = $section->fetchFields('hashid_field');
 
         foreach ($fields as $field) {
