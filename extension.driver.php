@@ -73,7 +73,7 @@ class extension_Hashid_field extends Extension
                     `length` int(2) unsigned NOT NULL,
                     PRIMARY KEY (`id`),
                     UNIQUE KEY `field_id` (`field_id`)
-                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
             );
 
             // Add the default salt (the site name) and hash length to manifest/config.php
@@ -114,6 +114,20 @@ class extension_Hashid_field extends Extension
              );
         }
 
+        if (version_compare($previousVersion, '2.0.2', '<')) {
+            Symphony::Database()->query(
+                "ALTER TABLE `tbl_fields_hashid_field`
+                    MODIFY COLUMN `salt` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;"
+            );
+
+            $hashFields = FieldManager::fetch(null, null, 'ASC', 'id', 'hashid_field');
+            foreach ($hashFields as $field) {
+                Symphony::Database()->query(
+                    "ALTER TABLE `tbl_entries_data_".$field->get('id')."`
+                        MODIFY COLUMN `value` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL;"
+                );
+            }
+        }
     }
 
     public function uninstall()
