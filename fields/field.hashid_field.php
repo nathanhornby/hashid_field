@@ -148,9 +148,9 @@ class FieldHashid_field extends Field implements ExportableField
         $label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, $data['value'], 'text', array('readonly' => 'readonly') ));
 
         if (strlen($data['value']) === 0) {
-            $label->appendChild('<p class="hash-field-box hash-info">The hash will be generated when the entry is saved.</p>');
+            $label->appendChild('<p class="hash-field-box hash-info">'.__('The hash will be generated when the entry is saved.').'</p>');
         } elseif ($data['value'] !== $hash) {
-            $label->appendChild('<p class="hash-field-box hash-warning">The hash will be replaced when the entry is saved.</p>');
+            $label->appendChild('<p class="hash-field-box hash-warning">'.__('The hash will be replaced when the entry is saved.').'</p>');
         }
 
         // Error flagging
