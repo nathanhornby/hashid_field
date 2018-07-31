@@ -20,67 +20,95 @@
 
     <releases>
         <release version="2.0.1" date="2016-07-29" min="2.4" max="2.6.x">
-            - Removed `size` from field table (#37)
+            <![CDATA[
+- Removed `size` from field table (#37)
+            ]]>
         </release>
         <release version="2.0.0" date="2016-02-11" min="2.4" max="2.6.x">
-            - Hash can now be up to 255 characters long
-            - The hash value column in the database now enforces uniqueness
-            - Improved coding style (Enforce PSR-2 code)
-            - [#28](https://github.com/nathanhornby/hashid_field/issues/28) Make compile method do all the work
-            - [#31](https://github.com/nathanhornby/hashid_field/issues/31) Fix bug when editing from frontend
-            - Return value of the FieldHashid_field::compile() method is boolean now (but the entry object is updated)
-            - Importers (XMLImporter) must rely on compile methods
-            - Simplify, drop registerField method (see also #31)
-            - Fix and simplify publish panel
-            - Update Hashids to v1.0.5, using composer now
-            - Use database insert instead of update, so the compile method will work without committing the entry beforehand
+            <![CDATA[
+- Hash can now be up to 255 characters long
+- The hash value column in the database now enforces uniqueness
+- Improved coding style (Enforce PSR-2 code)
+- [#28](https://github.com/nathanhornby/hashid_field/issues/28) Make compile method do all the work
+- [#31](https://github.com/nathanhornby/hashid_field/issues/31) Fix bug when editing from frontend
+- Return value of the FieldHashid_field::compile() method is boolean now (but the entry object is updated)
+- Importers (XMLImporter) must rely on compile methods
+- Simplify, drop registerField method (see also #31)
+- Fix and simplify publish panel
+- Update Hashids to v1.0.5, using composer now
+- Use database insert instead of update, so the compile method will work without committing the entry beforehand
+            ]]>
         </release>
         <release version="1.3.0" date="2016-01-18" min="2.4" max="2.6.x">
-            - Make the FieldHashid_field::compile() method returns the hash id
-            - Removed dead code and members
-            - Added prepareTextValue implementation
+            <![CDATA[
+- Make the FieldHashid_field::compile() method returns the hash id
+- Removed dead code and members
+- Added prepareTextValue implementation
+            ]]>
         </release>
         <release version="1.2.3" date="2016-01-14" min="2.4" max="2.6.x">
-            - Prevent the field from being registered multiple times.
+            <![CDATA[
+- Prevent the field from being registered multiple times.
+            ]]>
         </release>
         <release version="1.2.2" date="2016-01-13" min="2.4" max="2.6.x">
-            - Make sure FieldHashid_field::commit() always returns a value
+            <![CDATA[
+- Make sure FieldHashid_field::commit() always returns a value
+            ]]>
         </release>
         <release version="1.2.1" date="2014-08-27" min="2.4" max="2.5.x">
-            - Version bump.
-            - Added support for 'not:' in data source filtering. (Thanks @nitriques!)
+            <![CDATA[
+- Version bump.
+- Added support for 'not:' in data source filtering. (Thanks @nitriques!)
+            ]]>
         </release>
         <release version="1.2" date="2014-07-17" min="2.4" max="2.4">
-            - Scaled back styling.
-            - Improved readme.
+            <![CDATA[
+- Scaled back styling.
+- Improved readme.
+            ]]>
         </release>
         <release version="1.1" date="2014-07-13" min="2.4" max="2.4">
-            - Added publish toggle for regenerating Hashid's.
-            - Added hash salt and length as attributes to output XML for more advanced implementations that may want access to them.
+            <![CDATA[
+- Added publish toggle for regenerating Hashid's.
+- Added hash salt and length as attributes to output XML for more advanced implementations that may want access to them.
+            ]]>
         </release>
         <release version="1.0" date="2014-07-11" min="2.4" max="2.4">
-            - Changed hash length settings fields to only accept numbers.
-            - Checked compatability with older versions of Symphony, doesn't work pre-2.4.
-            - Changed layout of preferences.
-            - Titied up code and style inconsistencies, lots of comments added.
+            <![CDATA[
+- Changed hash length settings fields to only accept numbers.
+- Checked compatability with older versions of Symphony, doesn't work pre-2.4.
+- Changed layout of preferences.
+- Titied up code and style inconsistencies, lots of comments added.
+            ]]>
         </release>
         <release version="0.5" date="2014-07-09" min="2.4" max="2.4">
-            - Removed optional flagging from field settings.
+            <![CDATA[
+- Removed optional flagging from field settings.
+            ]]>
         </release>
         <release version="0.4" date="2014-07-09" min="2.4" max="2.4">
-            - UX improvements.
+            <![CDATA[
+- UX improvements.
+            ]]>
         </release>
         <release version="0.3" date="2014-07-07" min="2.4" max="2.4">
-            - Entries created with events now generate the hash.
-            - Fixed issue with displaying a new hash before the old hash has been replaced.
+            <![CDATA[
+- Entries created with events now generate the hash.
+- Fixed issue with displaying a new hash before the old hash has been replaced.
+            ]]>
         </release>
         <release version="0.2" date="2014-07-07" min="2.4" max="2.4">
-            - Changed extension name.
-            - Added field settings to allow for different salt's and lengths for each hashid field instance.
-            - Hashes are now created when the entry is created, not requiring a re-save.
+            <![CDATA[
+- Changed extension name.
+- Added field settings to allow for different salt's and lengths for each hashid field instance.
+- Hashes are now created when the entry is created, not requiring a re-save.
+            ]]>
         </release>
         <release version="0.1" date="2014-07-03" min="2.4" max="2.4">
-            - Extension created! Kind of works.
+            <![CDATA[
+- Extension created! Kind of works.
+            ]]>
         </release>
     </releases>
 
