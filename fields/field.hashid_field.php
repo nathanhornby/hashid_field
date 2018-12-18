@@ -70,8 +70,6 @@ class FieldHashid_field extends Field implements ExportableField
         return Symphony::Database()
             ->create('tbl_entries_data_' . $this->get('id'))
             ->ifNotExists()
-            ->charset('utf8')
-            ->collate('utf8_unicode_ci')
             ->fields([
                 'id' => [
                     'type' => 'int(11)',

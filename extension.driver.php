@@ -68,8 +68,6 @@ class extension_Hashid_field extends Extension
             Symphony::Database()
                 ->create('tbl_fields_hashid_field')
                 ->ifNotExists()
-                ->charset('utf8')
-                ->collate('utf8_unicode_ci')
                 ->fields([
                     'id' => [
                         'type' => 'int(11)',
