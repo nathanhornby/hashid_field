@@ -65,16 +65,24 @@ class extension_Hashid_field extends Extension
     {
         try {
             // Create the field table in the database
-            Symphony::Database()->query(
-                "CREATE TABLE IF NOT EXISTS `tbl_fields_hashid_field` (
-                    `id` int(11) unsigned NOT NULL auto_increment,
-                    `field_id` int(11) unsigned NOT NULL,
-                    `salt` VARCHAR(255) NOT NULL,
-                    `length` int(2) unsigned NOT NULL,
-                    PRIMARY KEY (`id`),
-                    UNIQUE KEY `field_id` (`field_id`)
-                ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
-            );
+            Symphony::Database()
+                ->create('tbl_fields_hashid_field')
+                ->ifNotExists()
+                ->fields([
+                    'id' => [
+                        'type' => 'int(11)',
+                        'auto' => true,
+                    ],
+                    'field_id' => 'int(11)',
+                    'salt' => 'varchar(255)',
+                    'length' => 'int(2)',
+                ])
+                ->keys([
+                    'id' => 'primary',
+                    'field_id' => 'unique',
+                ])
+                ->execute()
+                ->success();
 
             // Add the default salt (the site name) and hash length to manifest/config.php
             Symphony::Configuration()->set('hash_salt', Symphony::Configuration()->get('sitename', 'general'), 'hashid_field');
@@ -90,28 +98,43 @@ class extension_Hashid_field extends Extension
     public function update($previousVersion = false)
     {
         if (version_compare($previousVersion, '2.0.0', '<')) {
-            Symphony::Database()->query(
-                "ALTER TABLE `tbl_fields_hashid_field`
-                    DROP KEY `field_id`,
-                    ADD UNIQUE KEY `field_id` (`field_id`);"
-            );
+            Symphony::Database()
+                ->alter('tbl_fields_hashid_field')
+                ->dropKey('field_id')
+                ->addKey([
+                    'field_id' => 'unique',
+                ])
+                ->execute()
+                ->success();
 
-            $hashFields = FieldManager::fetch(null, null, 'ASC', 'id', 'hashid_field');
+            $hashFields = (new FieldManager)
+                ->select()
+                ->sort('id', 'asc')
+                ->type('hashid_field')
+                ->execute()
+                ->rows();
+
             foreach ($hashFields as $field) {
-                Symphony::Database()->query(
-                    "ALTER TABLE `tbl_entries_data_".$field->get('id')."`
-                        DROP KEY `value`,
-                        ADD UNIQUE KEY `value` (`value`),
-                        MODIFY COLUMN `value` varchar(255) NOT NULL;"
-                );
+                Symphony::Database()
+                    ->alter('tbl_entries_data_' . $field->get('id'))
+                    ->dropKey('value')
+                    ->addKey([
+                        'value' => 'unique',
+                    ])
+                    ->modify([
+                        'value' => 'varchar(255)',
+                    ])
+                    ->execute()
+                    ->success();
             }
         }
 
         if (version_compare($previousVersion, '2.0.1', '<')) {
-            Symphony::Database()->query(
-                "ALTER TABLE `tbl_fields_hashid_field`
-                    DROP COLUMN `size`;"
-             );
+            Symphony::Database()
+                ->alter('tbl_fields_hashid_field')
+                ->drop('size')
+                ->execute()
+                ->success();
         }
 
         if (version_compare($previousVersion, '2.0.2', '<')) {
@@ -134,7 +157,11 @@ class extension_Hashid_field extends Extension
     {
         if (parent::uninstall()) {
             // Drop the field table from the database
-            Symphony::Database()->query("DROP TABLE `tbl_fields_hashid_field`");
+            Symphony::Database()
+                ->drop('tbl_fields_hashid_field')
+                ->ifExists()
+                ->execute()
+                ->success();
 
             // Remove the field defaults from manifest/config.php
             Symphony::Configuration()->remove('hashid_field','hashid_field');
@@ -160,7 +187,11 @@ class extension_Hashid_field extends Extension
 
     public function compileFrontendFields($context)
     {
-        $section = SectionManager::fetch($context['entry']->get('section_id'));
+        $section = (new SectionManager)
+            ->select()
+            ->section($context['entry']->get('section_id'))
+            ->execute()
+            ->next();
         $fields = $section->fetchFields('hashid_field');
 
         foreach ($fields as $field) {

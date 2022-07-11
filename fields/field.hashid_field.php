@@ -4,6 +4,7 @@ if (!defined('__IN_SYMPHONY__')) die('<h2>Symphony Error</h2><p>You cannot direc
 
 require_once FACE . '/interface.exportablefield.php';
 require_once FACE . '/interface.importablefield.php';
+require_once EXTENSIONS . '/hashid_field/lib/class.entryqueryhashidadapter.php';
 
 require_once EXTENSIONS . '/hashid_field/vendor/autoload.php';
 use Hashids\Hashids;
@@ -13,6 +14,8 @@ class FieldHashid_field extends Field implements ExportableField
     public function __construct()
     {
         parent::__construct();
+        $this->entryQueryFieldAdapter = new EntryQueryHashidAdapter($this);
+
         $this->_name = __('Hashid');
         $this->_required = false;
 
@@ -64,16 +67,24 @@ class FieldHashid_field extends Field implements ExportableField
 
     public function createTable()
     {
-        return Symphony::Database()->query(
-            "CREATE TABLE IF NOT EXISTS `tbl_entries_data_".$this->get('id')."` (
-                `id` int(11) unsigned NOT NULL auto_increment,
-                `entry_id` int(11) unsigned NOT NULL,
-                `value` varchar(255) NOT NULL,
-                PRIMARY KEY  (`id`),
-                UNIQUE KEY `entry_id` (`entry_id`),
-                UNIQUE KEY `value` (`value`)
-            ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;"
-        );
+        return Symphony::Database()
+            ->create('tbl_entries_data_' . $this->get('id'))
+            ->ifNotExists()
+            ->fields([
+                'id' => [
+                    'type' => 'int(11)',
+                    'auto' => true,
+                ],
+                'entry_id' => 'int(11)',
+                'value' => 'varchar(255)',
+            ])
+            ->keys([
+                'id' => 'primary',
+                'entry_id' => 'unique',
+                'value' => 'unique',
+            ])
+            ->execute()
+            ->success();
     }
 
     /*-------------------------------------------------------------------------
@@ -330,7 +341,7 @@ class FieldHashid_field extends Field implements ExportableField
             'inclusion' => 'in'
         );
 
-        if (strpos($value, 'not:') !== FALSE) {
+        if (strpos($value, 'not:') !== false) {
             $ret['equality'] = '!=';
             $ret['inclusion'] = 'NOT IN';
             $ret['value'] = trim(str_replace('not:', '', $value));

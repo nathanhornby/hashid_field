@@ -1,31 +1,11 @@
-.field-hashid_field .hash-field-box{
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0.6rem;
-    -webkit-border-bottom-right-radius: 0.4rem;
-    -webkit-border-bottom-left-radius: 0.4rem;
-    -moz-border-radius-bottomright: 0.4rem;
-    -moz-border-radius-bottomleft: 0.4rem;
-    border-bottom-right-radius: 0.4rem;
-    border-bottom-left-radius: 0.4rem;
-}
-.field-hashid_field .hash-info{
-    color: #75693f;
-    background: #fff6d6;
-    border-bottom: 0.1rem solid #e6ce7c;
-    border-left: 0.1rem solid #e6ce7c;
-    border-right: 0.1rem solid #e6ce7c;
-}
-.field-hashid_field .hash-warning{
-    color: #814343;
-    background: #ffe4e4;
-    border-bottom: 0.1rem solid #ffb4b4;
-    border-left: 0.1rem solid #ffb4b4;
-    border-right: 0.1rem solid #ffb4b4;
-}
-@media all and (max-width: 960px){
-    .field-hashid_field .hash-field-box{
-        padding: 0.2rem 0.3rem;
-    }
+/**
+ * Hash ID
+ */
+
+.field-hashid_field .hash-field-box {
+	color: #657685;
+	font-size: 1.1rem;
+	text-align: right;
+	text-transform: none;
+	margin: 2px 0 0;
 }
